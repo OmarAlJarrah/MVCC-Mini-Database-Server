@@ -33,7 +33,7 @@ public class DatabaseApi {
     new Query(client).updateAge(id, newValue);
   }
 
-  public synchronized void create(String name, Integer age) throws IOException, DeniedAccessException {
+  public void create(String name, Integer age) throws IOException, DeniedAccessException {
     new Query(client).create(name, age);
   }
 

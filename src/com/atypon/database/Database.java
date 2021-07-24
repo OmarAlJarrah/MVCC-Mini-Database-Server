@@ -30,7 +30,7 @@ public class Database implements Serializable {
 
 
   public void create(String name, Integer age) {
-    synchronized (this){
+    synchronized (this.databaseFile){
       var createHandler = new Create(databaseFile, transactionData);
       createHandler.create(name, age);
     }

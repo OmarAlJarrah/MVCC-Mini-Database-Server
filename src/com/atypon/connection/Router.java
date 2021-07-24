@@ -1,6 +1,7 @@
 package com.atypon.connection;
 import com.atypon.api.LoginRequest;
 import com.atypon.authorization.AccessType;
+import com.atypon.authorization.User;
 import com.atypon.database.ClientData;
 import com.atypon.database.CoreDatabase;
 import com.atypon.database.Database;
@@ -12,6 +13,7 @@ import com.atypon.files.ObjectWriter;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 
 public class Router {
 
@@ -69,14 +71,27 @@ public class Router {
 
 
   private static synchronized void registerClient(AccessType access, LoginRequest loginRequest){
-    if (access.getAccess()){
+    if (access.getAccess()) {
       var user = loginRequest.getUsername();
-      var writer = new ObjectWriter();
-      var db = new Database(CoreDatabase.getNewVersion());
-      var clientData = new ClientData(user, db);
-      writer.write(CLIENTS_FILE, clientData);
+      if (!checkRegistrationStatus(user)){
+        var writer = new ObjectWriter();
+        var db = new Database(CoreDatabase.getNewVersion());
+        var clientData = new ClientData(user, db);
+        writer.write(CLIENTS_FILE, clientData);
+      }
     }
   }
+
+  private static synchronized boolean checkRegistrationStatus(String user){
+    var reader = new ObjectReader();
+    for (Object object: reader.readAll(CLIENTS_FILE)) {
+      ClientData data = (ClientData) object;
+      if (data.getUser().equals(user)) {
+        return true;
+      }
+    } return false;
+  }
+
   public static File getUserCommitHistoryFile() {
     return USER_COMMIT_HISTORY_FILE;
   }

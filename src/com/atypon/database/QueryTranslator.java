@@ -10,42 +10,42 @@ public class QueryTranslator implements TranslatorInterface {
 
   public QueryTranslator(Database database){
     this.database = database;
-    System.out.println("Translator");
   }
 
   public synchronized Object translate(DatabaseRequestInterface request) {
 
-    var query = request.getRequest();
-    String[] splitQuery = query.split(" ");
-    switch (splitQuery[0]) {
-      case "READ":
-        return translateRead(splitQuery);
+    synchronized (database.getDatabaseFile()) {
+      var query = request.getRequest();
+      String[] splitQuery = query.split(" ");
+      switch (splitQuery[0]) {
+        case "READ":
+          return translateRead(splitQuery);
 
-      case "DELETE":
-        translateDelete(splitQuery);
-        break;
+        case "DELETE":
+          translateDelete(splitQuery);
+          break;
 
-      case "UPDATE":
-        translateUpdate(splitQuery);
-        break;
+        case "UPDATE":
+          translateUpdate(splitQuery);
+          break;
 
-      case "CREATE":
-        translateCreate(splitQuery);
-        break;
+        case "CREATE":
+          translateCreate(splitQuery);
+          break;
 
-      case "COMMIT":
-        try {
-          var sender = request.getSender();
-          var clientData = Router.getClientData(sender);
+        case "COMMIT":
+          try {
+            var sender = request.getSender();
+            var clientData = Router.getClientData(sender);
 
-          return new Commit(database, clientData).commit();
-        } catch (Exception e){
-          new Log(Database.class.getName()).
-                  warning(e);
-        }
-        break;
+            return new Commit(database, clientData).commit();
+          } catch (Exception e) {
+            new Log(Database.class.getName()).warning(e);
+          }
+          break;
+      }
+      return new NullObject();
     }
-    return new NullObject();
   }
 
   private synchronized Object translateRead(String[] query) {

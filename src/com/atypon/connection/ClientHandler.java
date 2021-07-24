@@ -21,20 +21,18 @@ public class ClientHandler implements Runnable {
 
   public void run() {
     try {
+      System.out.println("Starting "+request.getRequest());
         var username = request.getSender();
         var database = DatabaseServer.getClientDatabase(username);
-      System.out.println("Client " + request.getSender());
         if (Boolean.TRUE.equals(request.getResponseExpected())) {
-        System.out.println("TRUE");
           outputStream = new ObjectOutputStream(socket.getOutputStream());
           var translator = new QueryTranslator(database);
           var object = translator.translate(request);
-        System.out.println("BEFORE");
           outputStream.writeObject(object);
-        System.out.println("AFTER");
         } else {
           new QueryTranslator(database).translate(request);
         }
+      System.out.println("Done with " + request.getRequest());
 
     } catch (IOException exception) {
       new Log(ClientHandler.class.getName()).

@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Update implements DatabaseUpdate {
-  File databaseFile;
+  private final File databaseFile;
   TransactionDataInterface transactionData;
   
   public Update(File databaseFile, TransactionDataInterface transactionData) {
@@ -31,9 +31,10 @@ public class Update implements DatabaseUpdate {
             new FileInputStream(databaseFile))) {
       synchronized (this) {
         do {
+          System.out.println("DOING");
           person = (PersonInterface) reader.readObject();
           if (person.getId().equals(id)) {
-            if (property.equals("name")) {
+            if (property.equalsIgnoreCase("name")) {
               person.setName((String) newValue);
             } else {
               person.setAge((Integer) newValue);
@@ -49,7 +50,7 @@ public class Update implements DatabaseUpdate {
       new Log(Update.class.getName()).warning(exception);
     }
 
-    synchronized (this) {
+    synchronized (databaseFile) {
       transactionData.registerWrite(id);
       new ObjectWriter().writeNewList(databaseFile, list);
     }

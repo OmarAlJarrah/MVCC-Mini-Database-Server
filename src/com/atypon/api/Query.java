@@ -29,7 +29,7 @@ public class Query implements QueryInterface {
     return person;
   }
 
-  public synchronized List<PersonInterface> readAll() {
+  public List<PersonInterface> readAll() {
     List<PersonInterface> list = new ArrayList<>();
     String command = "READ *";
     var request = new DatabaseRequest(sender, command, true);
@@ -42,7 +42,7 @@ public class Query implements QueryInterface {
     return list;
   }
 
-  public synchronized void create(String name, Integer age) {
+  public void create(String name, Integer age) {
     String command = "CREATE "
             + name
             + " "

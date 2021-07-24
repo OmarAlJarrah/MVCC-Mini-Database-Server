@@ -25,26 +25,26 @@ public class Commit implements Serializable, CommitInterface {
   public Commit(Database database, ClientData clientData) {
     this.transactionData = database.getTransactionData();
     this.clientData = clientData;
-    System.out.println("NEW COMMIT");
   }
 
   @Override
   public Object commit()  {
     synchronized (CoreDatabase.getDatabaseFile()) {
       synchronized (COMMITS_FILE) {
-        this.commitTime = new Date();
-        try {
-          checkCommitStatus();
-          registerCommit();
-          var database = clientData.getDatabase();
-          var file = database.getDatabaseFile();
-          CoreDatabase.commit(file);
-          cleanSession();
-          System.out.println("ACCEPTED");
-          return new AcceptedCommit();
-        } catch (InvalidCommitException invalidCommitException) {
-          cleanSession();
-          return new AbortedCommit();
+        synchronized (clientData.getDatabase()){
+          this.commitTime = new Date();
+          try {
+            checkCommitStatus();
+            registerCommit();
+            var database = clientData.getDatabase();
+            var file = database.getDatabaseFile();
+            CoreDatabase.commit(file);
+            cleanSession();
+            return new AcceptedCommit();
+          } catch (InvalidCommitException invalidCommitException) {
+            cleanSession();
+            return new AbortedCommit();
+          }
         }
       }
     }

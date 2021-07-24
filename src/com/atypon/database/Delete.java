@@ -19,12 +19,10 @@ public class Delete implements DatabaseDelete {
   public void delete(Integer id) {
     Person person = new NullPerson();
     var list = new ArrayList<>();
-    System.out.println("DELETING");
     try (var reader = new ObjectInputStream(
             new FileInputStream(databaseFile))) {
       synchronized (this){
         do {
-          System.out.println("Iteration");
           person = (Person) reader.readObject();
           if (!person.getId().equals(id)) {
             list.add(person);

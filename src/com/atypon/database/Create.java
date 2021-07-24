@@ -22,6 +22,7 @@ public class Create implements DatabaseCreate {
     var list = new ObjectReader().readAll(file);
     var newPerson = new Person(name, age);
     list.add(newPerson);
+    System.out.println(list.size());
 
     try (var writer = new ObjectOutputStream(
             new FileOutputStream(file))) {
@@ -34,7 +35,7 @@ public class Create implements DatabaseCreate {
       new Log(Create.class.getName()).
               warning(ioException);
     }
-    synchronized (this){
+    synchronized (this) {
       transactionData.registerWrite(newPerson.getId());
     }
 

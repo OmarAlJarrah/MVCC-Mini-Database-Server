@@ -21,7 +21,7 @@ public class DatabaseServer {
 
   }
 
-  public synchronized static void main(String[] args) throws IOException, ClassNotFoundException {
+  public static void main(String[] args) throws IOException, ClassNotFoundException {
     try {
       serverSocket = new ServerSocket(PORT);
     } catch (IOException ioException) {
@@ -31,10 +31,6 @@ public class DatabaseServer {
 
     while (true) {
       Socket socket = serverSocket.accept();
-      System.out.println("Listened");
-      System.out.println(
-              "Written"
-      );
       try {
         objectInputStream = new ObjectInputStream(socket.getInputStream());
         var request = (DatabaseRequestInterface) objectInputStream.readObject();
@@ -43,19 +39,20 @@ public class DatabaseServer {
         ).start();
         System.out.println(request.getSender() + " " + request.getRequest());
       } catch (EOFException eofException){
-        System.out.println("EXCEPTION");
         continue;
       }
     }
   }
 
-  public static Database getClientDatabase(String username) {
+  public synchronized static Database getClientDatabase(String username) {
     var reader = new ObjectReader();
     var clientsData = FilesManager.CLIENTS_DATA_FILE;
     List<Object> list = reader.readAll(clientsData);
     for (Object obj: list){
       ClientData map = (ClientData) obj;
+      System.out.println("User = " + map.getUser() + " ---- username = " + username);
       if (map.getUser().equals(username)){
+        System.out.println("Found database");
         return map.getDatabase();
       }
     }
