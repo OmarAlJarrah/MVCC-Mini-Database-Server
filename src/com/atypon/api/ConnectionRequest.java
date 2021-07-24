@@ -5,7 +5,6 @@ import com.atypon.authorization.DeniedAccess;
 import com.atypon.authorization.DeniedAccessException;
 import com.atypon.files.FilesManager;
 import com.atypon.files.Log;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,10 +15,10 @@ public class ConnectionRequest implements ConnectionRequestInterface {
   private final Integer port;
   private final Socket  socket;
 
-  public ConnectionRequest(final String USERNAME, final String IP) throws IOException {
-    this.clientUsername = USERNAME;
+  public ConnectionRequest(final String userName, final String ip) throws IOException {
+    this.clientUsername = userName;
     this.port = 2000;
-    this.socket = new Socket(IP, port);
+    this.socket = new Socket(ip, port);
   }
 
   public AccessType login() {
@@ -33,8 +32,8 @@ public class ConnectionRequest implements ConnectionRequestInterface {
       }
 
     } catch (IOException ioException) {
-      new Log(ConnectionRequest.class.getName()).
-              warning(ioException);
+      new Log(ConnectionRequest.class.getName())
+              .warning(ioException);
     }
     return access;
   }
@@ -60,7 +59,7 @@ public class ConnectionRequest implements ConnectionRequestInterface {
 
   public Integer getDatabasePort(String ip) throws DeniedAccessException {
     AccessType access = login();
-    if (!access.getAccess()){
+    if (!access.getAccess()) {
       throw new DeniedAccessException();
     }
     return 2001;

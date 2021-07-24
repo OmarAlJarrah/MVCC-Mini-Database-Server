@@ -4,7 +4,6 @@ import com.atypon.authorization.DeniedAccessException;
 import com.atypon.database.Person;
 import com.atypon.database.PersonInterface;
 import com.atypon.files.Log;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class Query implements QueryInterface {
     DatabaseRequestInterface request = new DatabaseRequest(sender, command, true);
     handleRequest(request);
     Object response =  handleResponse();
-    List<Object> arr = (List<Object>)response;
+    List<Object> arr = (List<Object>) response;
     for (Object obj : arr) {
       list.add((Person) obj);
     }

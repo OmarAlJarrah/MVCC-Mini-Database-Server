@@ -1,11 +1,10 @@
 package com.atypon.api;
 
-import com.atypon.database.Person;
 import com.atypon.database.PersonInterface;
-
 import java.util.List;
 
 public interface QueryInterface {
+
   void handleRequest(DatabaseRequestInterface request);
 
   Object handleResponse();
@@ -23,6 +22,5 @@ public interface QueryInterface {
   List<PersonInterface> readAll();
 
   PersonInterface read(Integer id);
-
 
 }

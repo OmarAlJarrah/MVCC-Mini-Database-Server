@@ -1,7 +1,6 @@
 package com.atypon.api;
 
 import com.atypon.authorization.DeniedAccessException;
-
 import java.io.IOException;
 import java.net.Socket;
 
@@ -19,7 +18,7 @@ public class ClientConnection {
     this.socket = new Socket(ip, port);
   }
 
-  public Socket getSocket(){
+  public Socket getSocket() {
     return this.socket;
   }
 
