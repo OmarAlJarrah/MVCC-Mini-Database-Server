@@ -34,6 +34,7 @@ public class Test {
 //   omarApi.updateName(18, "NEW-NAME");
 //    DatabaseApi zaidApi = new DatabaseApi("Zaid", "128.2.2.2");
 //    DatabaseApi ahmadApi = new DatabaseApi("Ahmad", "129.7.4.23");
+    omarApi.updateAge(23, -1);
     print(omarApi.readAll());
     omarApi.commit();
   }

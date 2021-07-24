@@ -60,7 +60,7 @@ public class Query implements QueryInterface {
   public void updateName(Integer id, String newValue) {
     String command = "UPDATE "
             + id
-            + "NAME "
+            + " NAME "
             + newValue;
 
     var request = new DatabaseRequest(sender, command);
@@ -70,7 +70,7 @@ public class Query implements QueryInterface {
   public void updateAge(Integer id, Integer newValue) {
     String command = "UPDATE "
             + id
-            + "AGE "
+            + " AGE "
             + newValue;
 
     var request = new DatabaseRequest(sender, command);

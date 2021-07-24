@@ -33,11 +33,16 @@ public class Update implements DatabaseUpdate {
         do {
           System.out.println("DOING");
           person = (PersonInterface) reader.readObject();
+          System.out.println(id + " compared to " + person.getId());
           if (person.getId().equals(id)) {
             if (property.equalsIgnoreCase("name")) {
+              System.out.println("Old name = " + person.getName());
               person.setName((String) newValue);
+              System.out.println("New name = " + person.getName());
             } else {
+              System.out.println("Old age = " + person.getAge());
               person.setAge((Integer) newValue);
+              System.out.println("New age = " + person.getAge());
             }
           }
           list.add(person);
