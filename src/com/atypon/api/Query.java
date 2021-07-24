@@ -1,9 +1,9 @@
 package com.atypon.api;
 
 import com.atypon.authorization.DeniedAccessException;
-import com.atypon.database.CommitStatus;
 import com.atypon.database.Person;
 import com.atypon.database.PersonInterface;
+import com.atypon.files.Log;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -15,15 +15,20 @@ public class Query implements QueryInterface {
   String sender;
   Socket socket;
 
-  public Query(ClientInterface client) throws IOException, DeniedAccessException {
-    channel = new CommunicationChannel(client);
-    this.sender = client.getUsername();
+  public Query(ClientInterface client) throws DeniedAccessException {
+    try {
+      channel = new CommunicationChannel(client);
+      this.sender = client.getUsername();
+    } catch (IOException ioException) {
+      new Log(Query.class.getName())
+              .warning(ioException);
+    }
   }
 
   public PersonInterface read(Integer id) {
     Person person;
     String command = "READ " + id;
-    var request = new DatabaseRequest(sender, command, true);
+    DatabaseRequestInterface request = new DatabaseRequest(sender, command, true);
     handleRequest(request);
     person = (Person) handleResponse();
     return person;
@@ -32,10 +37,10 @@ public class Query implements QueryInterface {
   public List<PersonInterface> readAll() {
     List<PersonInterface> list = new ArrayList<>();
     String command = "READ *";
-    var request = new DatabaseRequest(sender, command, true);
+    DatabaseRequestInterface request = new DatabaseRequest(sender, command, true);
     handleRequest(request);
-    var response =  handleResponse();
-    var arr = (List<Object>)response;
+    Object response =  handleResponse();
+    List<Object> arr = (List<Object>)response;
     for (Object obj : arr) {
       list.add((Person) obj);
     }
@@ -53,7 +58,7 @@ public class Query implements QueryInterface {
 
   public void delete(Integer id) {
     String command = "DELETE " + id;
-    var request  = new DatabaseRequest(sender, command);
+    DatabaseRequestInterface request  = new DatabaseRequest(sender, command);
     handleRequest(request);
   }
 
@@ -63,7 +68,7 @@ public class Query implements QueryInterface {
             + " NAME "
             + newValue;
 
-    var request = new DatabaseRequest(sender, command);
+    DatabaseRequestInterface request = new DatabaseRequest(sender, command);
     handleRequest(request);
   }
 
@@ -73,13 +78,13 @@ public class Query implements QueryInterface {
             + " AGE "
             + newValue;
 
-    var request = new DatabaseRequest(sender, command);
+    DatabaseRequestInterface request = new DatabaseRequest(sender, command);
     handleRequest(request);
   }
 
-  public synchronized Object commit() {
+  public Object commit() {
     String command = "COMMIT";
-    var request = new DatabaseRequest(sender, command, true);
+    DatabaseRequestInterface request = new DatabaseRequest(sender, command, true);
     handleRequest(request);
     return handleResponse();
   }
@@ -90,7 +95,6 @@ public class Query implements QueryInterface {
 
   public void handleRequest(DatabaseRequestInterface request) {
     channel.sendRequest(request);
-
   }
 
 }

@@ -9,7 +9,6 @@ public class ObjectWriter implements WriteOperations {
 
   @Override
   public void write(File file, Object object) {
-    synchronized (file){
       try {
         ReadOperations read = new ObjectReader();
         objectArrayList = new ArrayList<>();
@@ -19,13 +18,13 @@ public class ObjectWriter implements WriteOperations {
       } catch (IOException | ClassNotFoundException exception) {
         new Log(ObjectWriter.class.getName()).warning(exception);
       }
-    }
+
   }
 
   @Override
   public void writeList(File file, ArrayList<Object> arrayList) {
-    synchronized (file){
-      try (var out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+    try (ObjectOutputStream out = new ObjectOutputStream(
+            new FileOutputStream(file))) {
         ReadOperations read = new ObjectReader();
         objectArrayList = read.readAll(file);
         objectArrayList.addAll(arrayList);
@@ -35,12 +34,12 @@ public class ObjectWriter implements WriteOperations {
       } catch (IOException | ClassNotFoundException exception) {
         new Log(ObjectWriter.class.getName()).warning(exception);
       }
-    }
   }
 
   @Override
   public void writeNewList(File file, ArrayList<Object> arrayList) {
-      try (var out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      try (ObjectOutputStream out = new ObjectOutputStream(
+                      new FileOutputStream(file))) {
         for (Object obj : arrayList) {
           out.writeObject(obj);
         }

@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class Client implements ClientInterface {
-  private final String USERNAME;
+  private final String userName;
   private final String ip;
   ClientConnection clientConnection;
 
-  public Client(final String username, final String ip) throws IOException, DeniedAccessException {
-    this.USERNAME = username;
+  public Client(final String username, final String ip) {
+    this.userName = username;
     this.ip = ip;
   }
 
@@ -24,7 +24,7 @@ public class Client implements ClientInterface {
   }
 
   public String getUsername() {
-    return USERNAME;
+    return userName;
   }
 
   public String getIp() {

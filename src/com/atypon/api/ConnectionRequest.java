@@ -12,18 +12,18 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ConnectionRequest implements ConnectionRequestInterface {
-  private final String  CLIENT_USERNAME;
-  private final Integer PORT;
+  private final String clientUsername;
+  private final Integer port;
   private final Socket  socket;
 
   public ConnectionRequest(final String USERNAME, final String IP) throws IOException {
-    this.CLIENT_USERNAME = USERNAME;
-    this.PORT = 2000;
-    this.socket = new Socket(IP, PORT);
+    this.clientUsername = USERNAME;
+    this.port = 2000;
+    this.socket = new Socket(IP, port);
   }
 
   public AccessType login() {
-    var loginRequest = new LoginRequest(CLIENT_USERNAME);
+    var loginRequest = new LoginRequest(clientUsername);
     AccessType access = new DeniedAccess();
 
     try {
@@ -32,7 +32,7 @@ public class ConnectionRequest implements ConnectionRequestInterface {
         access = readLoginResponse();
       }
 
-    } catch (IOException | ClassNotFoundException ioException) {
+    } catch (IOException ioException) {
       new Log(ConnectionRequest.class.getName()).
               warning(ioException);
     }
@@ -46,10 +46,16 @@ public class ConnectionRequest implements ConnectionRequestInterface {
     outputStream.flush();
   }
 
-  public AccessType readLoginResponse() throws IOException, ClassNotFoundException {
-    var inputStream = new ObjectInputStream(
-            socket.getInputStream());
-    return (AccessType) inputStream.readObject();
+  public AccessType readLoginResponse()  {
+    ObjectInputStream inputStream = null;
+    try {
+      inputStream = new ObjectInputStream(
+              socket.getInputStream());
+      return (AccessType) inputStream.readObject();
+    } catch (IOException | ClassNotFoundException ioException) {
+      ioException.printStackTrace();
+    }
+    return null;
   }
 
   public Integer getDatabasePort(String ip) throws DeniedAccessException {

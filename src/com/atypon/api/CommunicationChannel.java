@@ -17,19 +17,17 @@ public class CommunicationChannel implements CommunicationChannelInterface {
     this.socket = client.getSocket();
   }
 
-  public synchronized void sendRequest(DatabaseRequestInterface request) {
+  public void sendRequest(DatabaseRequestInterface request) {
     try {
-      //resetOutputStream();
-      output=new ObjectOutputStream(socket.getOutputStream());
+      resetOutputStream();
       output.writeObject(request);
-      System.out.println("Sent");
     } catch (IOException ioException) {
       new Log(Query.class.getName())
               .warning(ioException);
     }
   }
 
-  public synchronized Object readResponse() {
+  public Object readResponse() {
     Object object = new NullObject();
     try {
       resetInputStreams();
@@ -41,6 +39,10 @@ public class CommunicationChannel implements CommunicationChannelInterface {
     return object;
   }
 
+  public Socket getSocket() {
+    return socket;
+  }
+
   private void resetInputStreams() {
     try {
       input = new ObjectInputStream(socket.getInputStream());
@@ -48,10 +50,6 @@ public class CommunicationChannel implements CommunicationChannelInterface {
       new Log(Query.class.getName())
               .warning(ioException);
     }
-  }
-
-  public Socket getSocket() {
-    return socket;
   }
 
   private void resetOutputStream() {

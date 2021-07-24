@@ -12,7 +12,8 @@ public class ObjectReader implements ReadOperations {
 
   @Override
   public Object read(File file) {
-    try (var objectRead = new ObjectInputStream(new FileInputStream(file))) {
+    try (var objectRead = new ObjectInputStream(
+            new FileInputStream(file))) {
       return objectRead.readObject();
     } catch (IOException | ClassNotFoundException exception) {
       new Log(ObjectReader.class.getName()).warning(exception);
@@ -24,13 +25,11 @@ public class ObjectReader implements ReadOperations {
   public Object readEntity(File file, Object goal) {
     Object output = new NullObject();
     try (var objectRead = new ObjectInputStream(
-            new BufferedInputStream(
-                    new FileInputStream(file)))) {
+            new FileInputStream(file))) {
       do {
         output = objectRead.read();
       } while (!output.equals(goal));
     } catch (EOFException eofException) {
-      new Log(ObjectReader.class.getName()).info(eofException);
       // As expected
     } catch (IOException exception) {
       new Log(ObjectReader.class.getName()).warning(exception);
@@ -46,14 +45,12 @@ public class ObjectReader implements ReadOperations {
   public ArrayList<Object> readAll(File file) {
     ArrayList<Object> output = new ArrayList<>();
     try (var objectRead = new ObjectInputStream(
-            new BufferedInputStream(
-                    new FileInputStream(file)))) {
+            new FileInputStream(file))) {
       do {
         output.add(objectRead.readObject());
       } while (true);
     } catch (EOFException eofException) {
       // As expected
-      new Log(ObjectReader.class.getName()).info(eofException);
     } catch (IOException | ClassNotFoundException exception) {
       new Log(ObjectReader.class.getName()).warning(exception);
     }

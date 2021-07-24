@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ClientConnection {
-  private Integer port;
-
+  private final Integer port;
   private String username;
   private String ip;
   private Socket socket;
+
   public ClientConnection(ClientInterface client) throws DeniedAccessException, IOException {
     this.ip = client.getIp();
     this.username = client.getUsername();
@@ -23,7 +23,4 @@ public class ClientConnection {
     return this.socket;
   }
 
-  public Integer getPort() {
-    return port;
-  }
 }
