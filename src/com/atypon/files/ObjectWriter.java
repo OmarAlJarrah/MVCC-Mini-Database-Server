@@ -18,7 +18,6 @@ public class ObjectWriter implements WriteOperations {
       } catch (IOException | ClassNotFoundException exception) {
         new Log(ObjectWriter.class.getName()).warning(exception);
       }
-
   }
 
   @Override
