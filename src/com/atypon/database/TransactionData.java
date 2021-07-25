@@ -10,36 +10,35 @@ public class TransactionData implements Serializable, TransactionDataInterface {
   private final HashSet<Integer> writeSet = new HashSet<>();
 
 
+  @Override
   public void registerRead(Integer id) {
     synchronized (this){
       readSet.add(id);
     }
   }
 
+  @Override
   public void registerWrite(Integer id) {
     synchronized (this) {
       writeSet.add(id);
     }
   }
 
-  public void setWrite(Integer id) {
-    synchronized (this){
-      writeSet.add(id);
-    }
-  }
-
+  @Override
   public Set<Integer> getReadSet() {
     synchronized (this){
       return readSet;
     }
   }
 
+  @Override
   public Set<Integer> getWriteSet() {
     synchronized (this){
       return writeSet;
     }
   }
 
+  @Override
   public Boolean checkConflict(TransactionDataInterface other) {
     readSet.retainAll(other.getWriteSet());
     writeSet.retainAll(other.getWriteSet());

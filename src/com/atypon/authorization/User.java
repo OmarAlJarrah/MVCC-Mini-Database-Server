@@ -4,25 +4,25 @@ import java.io.*;
 import java.util.Objects;
 
 public class User implements UserInterface, Serializable {
-  private final String userId;
-  private final String accessType;
+  private final String USER_ID;
+  private final String ACCESS_TYPE;
 
   private String username;
 
   private static final Long serialVersionUID = 2L;
   public User(String id, String access) {
-    userId = id;
-    accessType = access;
+    USER_ID = id;
+    ACCESS_TYPE = access;
   }
 
   @Override
-  public String getUserId() {
-    return userId;
+  public String getUSER_ID() {
+    return USER_ID;
   }
 
   @Override
-  public String getAccessType() {
-    return accessType;
+  public String getACCESS_TYPE() {
+    return ACCESS_TYPE;
   }
 
   @Override
@@ -34,7 +34,7 @@ public class User implements UserInterface, Serializable {
       return false;
     }
     var user = (User) o;
-    return Objects.equals(userId, user.userId) && Objects.equals(accessType, user.accessType);
+    return Objects.equals(USER_ID, user.USER_ID) && Objects.equals(ACCESS_TYPE, user.ACCESS_TYPE);
   }
 
   @Override
@@ -44,7 +44,7 @@ public class User implements UserInterface, Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(userId, accessType);
+    return Objects.hash(USER_ID, ACCESS_TYPE);
   }
 
   public String getUsername() {

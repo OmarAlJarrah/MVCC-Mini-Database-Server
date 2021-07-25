@@ -1,7 +1,7 @@
 package com.atypon.database;
 
 import com.atypon.api.DatabaseRequestInterface;
-import com.atypon.connection.Router;
+import com.atypon.connection.AccessLayer;
 import com.atypon.files.Log;
 import com.atypon.files.NullObject;
 
@@ -15,7 +15,7 @@ public class QueryTranslator implements TranslatorInterface {
   public synchronized Object translate(DatabaseRequestInterface request) {
 
     synchronized (database.getDatabaseFile()) {
-      var query = request.getRequest();
+      String query = request.getRequest();
       String[] splitQuery = query.split(" ");
       switch (splitQuery[0]) {
         case "READ":
@@ -35,9 +35,8 @@ public class QueryTranslator implements TranslatorInterface {
 
         case "COMMIT":
           try {
-            var sender = request.getSender();
-            var clientData = Router.getClientData(sender);
-
+            String sender = request.getSender();
+            ClientDataInterface clientData = AccessLayer.getClientData(sender);
             return new Commit(database, clientData).commit();
           } catch (Exception e) {
             new Log(Database.class.getName()).warning(e);
@@ -48,7 +47,7 @@ public class QueryTranslator implements TranslatorInterface {
     }
   }
 
-  private synchronized Object translateRead(String[] query) {
+  private Object translateRead(String[] query) {
     Object output;
     if ("*".equals(query[1])) {
       output = database.readAll();
@@ -58,14 +57,14 @@ public class QueryTranslator implements TranslatorInterface {
     return output;
   }
 
-  private synchronized void translateDelete(String[] query) {
+  private void translateDelete(String[] query) {
     database.delete(Integer.parseInt(query[1]));
   }
 
-  private synchronized void translateUpdate(String[] query){
-    var id = Integer.parseInt(query[1]);
-    var property = query[2];
-    var newValue = query[3];
+  private void translateUpdate(String[] query){
+    Integer id = Integer.parseInt(query[1]);
+    String property = query[2];
+    String newValue = query[3];
 
     if ("NAME".equalsIgnoreCase(property)) {
       database.updateName(id, newValue);
@@ -77,9 +76,9 @@ public class QueryTranslator implements TranslatorInterface {
     }
   }
 
-  private synchronized void translateCreate(String[] query){
-    var name = query[1];
-    var age = Integer.parseInt(query[2]);
+  private void translateCreate(String[] query){
+    String name = query[1];
+    Integer age = Integer.parseInt(query[2]);
 
     database.create(name, age);
   }

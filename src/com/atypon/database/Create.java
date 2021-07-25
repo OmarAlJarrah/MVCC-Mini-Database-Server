@@ -2,11 +2,14 @@ package com.atypon.database;
 
 import com.atypon.files.Log;
 import com.atypon.files.ObjectReader;
+import com.atypon.files.ObjectWriter;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Create implements DatabaseCreate {
   File file;
@@ -19,21 +22,12 @@ public class Create implements DatabaseCreate {
 
   @Override
   public Object create(String name, Integer age) {
-    var list = new ObjectReader().readAll(file);
-    var newPerson = new Person(name, age);
+    ArrayList<Object> list = new ObjectReader().readAll(file);
+    PersonInterface newPerson = PersonFactory.makePerson(name, age);
     list.add(newPerson);
-    System.out.println(list.size());
-
-    try (var writer = new ObjectOutputStream(
-            new FileOutputStream(file))) {
-      synchronized (this) {
-        for (Object object : list) {
-          writer.writeObject(object);
-        }
-      }
-    } catch (IOException ioException) {
-      new Log(Create.class.getName()).
-              warning(ioException);
+    synchronized (this) {
+      ObjectWriter writer = new ObjectWriter();
+      writer.writeNewList(file, list);
     }
     synchronized (this) {
       transactionData.registerWrite(newPerson.getId());

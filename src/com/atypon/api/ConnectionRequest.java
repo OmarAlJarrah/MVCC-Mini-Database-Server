@@ -11,18 +11,18 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ConnectionRequest implements ConnectionRequestInterface {
-  private final String clientUsername;
-  private final Integer port;
-  private final Socket  socket;
+  private final String CLIENT_USER_NAME;
+  private final Integer PORT;
+  private final Socket SOCKET;
 
   public ConnectionRequest(final String userName, final String ip) throws IOException {
-    this.clientUsername = userName;
-    this.port = 2000;
-    this.socket = new Socket(ip, port);
+    this.CLIENT_USER_NAME = userName;
+    this.PORT = 2000;
+    this.SOCKET = new Socket(ip, PORT);
   }
 
   public AccessType login() {
-    var loginRequest = new LoginRequest(clientUsername);
+    var loginRequest = new LoginRequest(CLIENT_USER_NAME);
     AccessType access = new DeniedAccess();
 
     try {
@@ -40,7 +40,7 @@ public class ConnectionRequest implements ConnectionRequestInterface {
 
   public void sendLoginRequest(LoginRequest loginRequest) throws IOException {
     var outputStream = new ObjectOutputStream(
-            socket.getOutputStream());
+            SOCKET.getOutputStream());
     outputStream.writeObject(loginRequest);
     outputStream.flush();
   }
@@ -49,7 +49,7 @@ public class ConnectionRequest implements ConnectionRequestInterface {
     ObjectInputStream inputStream = null;
     try {
       inputStream = new ObjectInputStream(
-              socket.getInputStream());
+              SOCKET.getInputStream());
       return (AccessType) inputStream.readObject();
     } catch (IOException | ClassNotFoundException ioException) {
       ioException.printStackTrace();

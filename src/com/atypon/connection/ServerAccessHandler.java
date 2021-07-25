@@ -6,18 +6,18 @@ import com.atypon.files.Log;
 
 
 
-public class ServerAccess {
+public class ServerAccessHandler {
 
-  private ServerAccess(){}
+  private ServerAccessHandler(){}
 
   public static AccessType checkAccess (LoginRequest loginRequest){
     AccessType output;
     try{
-      Access.getAccess(loginRequest.getUsername());
+      Access.getAccess(loginRequest.getUserName());
       output = new GrantedAccess();
     } catch (DeniedAccessException deniedAccessException) {
       output = new DeniedAccess();
-      new Log(ServerAccess.class.getName()).
+      new Log(ServerAccessHandler.class.getName()).
               warning(deniedAccessException);
     }
     return output;

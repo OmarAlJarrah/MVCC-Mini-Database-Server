@@ -11,5 +11,5 @@ public interface ClientInterface {
 
   String getUsername();
 
-  String getIp();
+  String getIP();
 }

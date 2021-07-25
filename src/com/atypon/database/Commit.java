@@ -16,13 +16,13 @@ public class Commit implements Serializable, CommitInterface {
 
   private final TransactionDataInterface transactionData;
 
-  private final ClientData clientData;
+  private final ClientDataInterface clientData;
 
   private Date commitTime;
 
   private static final File COMMITS_FILE = CoreDatabase.getCommitsFile();
 
-  public Commit(Database database, ClientData clientData) {
+  public Commit(Database database, ClientDataInterface clientData) {
     this.transactionData = database.getTransactionData();
     this.clientData = clientData;
   }
@@ -71,7 +71,7 @@ public class Commit implements Serializable, CommitInterface {
     return commitTime;
   }
 
-  public ClientData getClientData() {
+  public ClientDataInterface getClientData() {
     return clientData;
   }
 

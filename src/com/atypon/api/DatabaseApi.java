@@ -7,37 +7,37 @@ import java.io.IOException;
 import java.util.List;
 
 public class DatabaseApi {
-  private final ClientInterface client;
+  private final ClientInterface CLIENT;
 
-  public DatabaseApi(String username, String userIp) throws IOException, DeniedAccessException {
-    client = new Client(username, userIp);
+  public DatabaseApi(String username, String userIp) {
+    CLIENT = new Client(username, userIp);
   }
 
   public Object read(Integer id) throws IOException, DeniedAccessException {
-    return new Query(client).read(id);
+    return new Query(CLIENT).read(id);
   }
 
   public List<PersonInterface> readAll() throws IOException, DeniedAccessException {
-    return new Query(client).readAll();
+    return new Query(CLIENT).readAll();
   }
 
-  public void updateName(Integer id, String newValue) throws IOException, DeniedAccessException {
-    new Query(client).updateName(id, newValue);
+  public void updateName(Integer id, String newValue) throws DeniedAccessException {
+    new Query(CLIENT).updateName(id, newValue);
   }
 
-  public void delete(Integer id) throws IOException, DeniedAccessException {
-    new Query(client).delete(id);
+  public void delete(Integer id) throws DeniedAccessException {
+    new Query(CLIENT).delete(id);
   }
 
-  public void updateAge(Integer id, Integer newValue) throws IOException, DeniedAccessException {
-    new Query(client).updateAge(id, newValue);
+  public void updateAge(Integer id, Integer newValue) throws DeniedAccessException {
+    new Query(CLIENT).updateAge(id, newValue);
   }
 
-  public void create(String name, Integer age) throws IOException, DeniedAccessException {
-    new Query(client).create(name, age);
+  public void create(String name, Integer age) throws DeniedAccessException {
+    new Query(CLIENT).create(name, age);
   }
 
   public Object commit() throws IOException, DeniedAccessException {
-    return new Query(client).commit();
+    return new Query(CLIENT).commit();
   }
 }

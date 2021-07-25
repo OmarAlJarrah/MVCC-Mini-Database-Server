@@ -11,9 +11,9 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Id implements IdFactoryInterface {
   private static final File ID_FILE = FilesManager.ID_FILE;
 
-  private static synchronized void update(Integer value){
+  private static synchronized void update(Integer value) {
     var writer = new ObjectWriter();
-    var list = new ArrayList<Object>();
+    var list = new ArrayList<>();
     list.add(value);
     writer.writeNewList(ID_FILE, list);
   }

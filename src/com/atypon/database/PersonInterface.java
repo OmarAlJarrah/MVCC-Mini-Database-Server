@@ -3,11 +3,13 @@ package com.atypon.database;
 public interface PersonInterface {
   Integer getId();
 
-  String getName();
+  String getFirstName();
 
-  void setName(String name);
+  void setFirstName(String firstName);
 
   int getAge();
 
   void setAge(int age);
+
+  void setId(Integer id);
 }

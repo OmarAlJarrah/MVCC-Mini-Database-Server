@@ -17,30 +17,24 @@ public class Delete implements DatabaseDelete {
 
   @Override
   public void delete(Integer id) {
-    Person person = new NullPerson();
+    PersonInterface person = PersonFactory.makeNullPerson();
     var list = new ArrayList<>();
     try (var reader = new ObjectInputStream(
             new FileInputStream(databaseFile))) {
-      synchronized (this){
         do {
           person = (Person) reader.readObject();
           if (!person.getId().equals(id)) {
             list.add(person);
           }
         } while (true);
-      }
     } catch (EOFException eofException) {
       // As expected
-      new Log(Delete.class.getName()).
-              info(eofException);
     } catch (IOException | ClassNotFoundException exception) {
       new Log(Delete.class.getName()).
               warning(exception);
     }
-    synchronized (this){
       var writer = new ObjectWriter();
       writer.writeNewList(databaseFile, list);
       transactionData.registerWrite(id);
-    }
   }
 }

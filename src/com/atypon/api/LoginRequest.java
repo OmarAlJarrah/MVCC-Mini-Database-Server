@@ -3,13 +3,13 @@ package com.atypon.api;
 import java.io.Serializable;
 
 public class LoginRequest implements Serializable, LoginRequestInterface {
-  String username;
+  private final String USER_NAME;
 
-  public LoginRequest(String username) {
-    this.username = username;
+  public LoginRequest(String USER_NAME) {
+    this.USER_NAME = USER_NAME;
   }
 
-  public String getUsername() {
-    return username;
+  public String getUserName() {
+    return USER_NAME;
   }
 }

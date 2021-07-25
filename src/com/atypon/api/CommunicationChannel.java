@@ -9,9 +9,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class CommunicationChannel implements CommunicationChannelInterface {
-  Socket socket;
-  ObjectInputStream input;
-  ObjectOutputStream output;
+  private Socket socket;
+  private ObjectInputStream input;
+  private ObjectOutputStream output;
 
   public CommunicationChannel(ClientInterface client) throws IOException, DeniedAccessException {
     this.socket = client.getSocket();

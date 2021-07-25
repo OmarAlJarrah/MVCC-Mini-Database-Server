@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class DeniedAccess implements AccessType, Serializable {
 
   @Override
-  public boolean getAccess() {
+  public final boolean getAccess() {
     return false;
   }
 }

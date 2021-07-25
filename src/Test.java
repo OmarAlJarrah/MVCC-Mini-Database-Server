@@ -1,15 +1,8 @@
 import com.atypon.api.*;
 import com.atypon.authorization.*;
-import com.atypon.connection.*;
 import com.atypon.database.*;
-import com.atypon.database.IdFactory;
-import com.atypon.files.ObjectReader;
-import com.atypon.files.ObjectWriter;
 
 import java.io.*;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Test {
@@ -41,7 +34,7 @@ public class Test {
 
   public static void print(List<PersonInterface> list){
     for (PersonInterface person : list) {
-      System.out.println("Name : "+person.getName()
+      System.out.println("Name : "+person.getFirstName()
               + ", Age : " + person.getAge()
               + " ID : " + person.getId());
     }

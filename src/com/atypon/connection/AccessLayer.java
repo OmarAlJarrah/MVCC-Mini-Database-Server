@@ -1,7 +1,6 @@
 package com.atypon.connection;
 import com.atypon.api.LoginRequest;
 import com.atypon.authorization.AccessType;
-import com.atypon.authorization.User;
 import com.atypon.database.ClientData;
 import com.atypon.database.CoreDatabase;
 import com.atypon.database.Database;
@@ -15,7 +14,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
-public class Router {
+public class AccessLayer {
 
   private static ServerSocket           routerServerSocket;
   private static Socket                 routerSocket;
@@ -27,12 +26,12 @@ public class Router {
     try {
       routerServerSocket = new ServerSocket(PORT);
     } catch (IOException ioException) {
-      new Log(Router.class.getName()).
+      new Log(AccessLayer.class.getName()).
               warning(ioException);
     }
   }
 
-  private Router() {
+  private AccessLayer() {
   }
 
   public static void main(String[] args) {
@@ -43,7 +42,7 @@ public class Router {
         new ObjectOutputStream(routerSocket.getOutputStream())
                 .writeObject(access);
       } catch (IOException ioException) {
-        new Log(Router.class.getName()).
+        new Log(AccessLayer.class.getName()).
                 warning(ioException);
       }
     }
@@ -51,7 +50,7 @@ public class Router {
 
   private static synchronized AccessType checkAccess(){
     var login = readLoginRequest();
-    var access = ServerAccess.checkAccess(login);
+    var access = ServerAccessHandler.checkAccess(login);
     if (access.getAccess()){
       registerClient(access, login);
     }
@@ -64,7 +63,7 @@ public class Router {
       var in = new ObjectInputStream(routerSocket.getInputStream());
       loginRequest = (LoginRequest) in.readObject();
     } catch (IOException | ClassNotFoundException exception) {
-      new Log(ServerAccess.class.getName()).warning(exception);
+      new Log(ServerAccessHandler.class.getName()).warning(exception);
     }
     return loginRequest;
   }
@@ -72,7 +71,7 @@ public class Router {
 
   private static synchronized void registerClient(AccessType access, LoginRequest loginRequest){
     if (access.getAccess()) {
-      var user = loginRequest.getUsername();
+      var user = loginRequest.getUserName();
       if (!checkRegistrationStatus(user)){
         var writer = new ObjectWriter();
         var db = new Database(CoreDatabase.getNewVersion());

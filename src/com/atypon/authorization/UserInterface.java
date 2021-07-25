@@ -1,9 +1,9 @@
 package com.atypon.authorization;
 
 public interface UserInterface {
-  String getUserId();
+  String getUSER_ID();
 
-  String getAccessType();
+  String getACCESS_TYPE();
 
   boolean login(String username);
 

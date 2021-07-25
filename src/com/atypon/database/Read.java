@@ -21,17 +21,14 @@ public class Read implements DatabaseRead {
     Person person = new NullPerson();
     try (var reader = new ObjectInputStream(
             new FileInputStream(databaseFile))) {
-      synchronized (this){
-        do {
-          person = (Person) reader.readObject();
-        } while (!person.getId().equals(id));
-      }
+      do {
+        person = (Person) reader.readObject();
+      } while (!person.getId().equals(id));
     } catch (IOException | ClassNotFoundException exception) {
-      exception.printStackTrace();
+      new Log(Read.class.getName())
+              .warning(exception);
     }
-    synchronized (this){
-      transactionData.registerRead(id);
-    }
+    transactionData.registerRead(id);
     return person;
   }
 
@@ -42,16 +39,15 @@ public class Read implements DatabaseRead {
             new FileInputStream(databaseFile))) {
       synchronized (this){
         do {
-          var object = reader.readObject();
-          var person = (PersonInterface) object;
-          var id = person.getId();
+          Object object = reader.readObject();
+          PersonInterface person = (PersonInterface) object;
+          Integer id = person.getId();
           output.add(object);
           transactionData.registerRead(id);
         } while (true);
       }
     } catch (EOFException eofException){
       // as expected
-      new Log(Read.class.getName()).info(eofException);
     } catch (IOException | ClassNotFoundException exception) {
       new Log(Read.class.getName()).warning(exception);
     }

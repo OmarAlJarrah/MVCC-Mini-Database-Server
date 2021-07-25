@@ -5,14 +5,12 @@ import com.atypon.database.Person;
 import com.atypon.database.PersonInterface;
 import com.atypon.files.Log;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Query implements QueryInterface {
   CommunicationChannelInterface channel;
-  String sender;
-  Socket socket;
+  private String sender;
 
   public Query(ClientInterface client) throws DeniedAccessException {
     try {
@@ -24,21 +22,23 @@ public class Query implements QueryInterface {
     }
   }
 
+  @Override
   public PersonInterface read(Integer id) {
     Person person;
     String command = "READ " + id;
     DatabaseRequestInterface request = new DatabaseRequest(sender, command, true);
-    handleRequest(request);
-    person = (Person) handleResponse();
+    RequestResponseHandler.handleRequest(request, channel);
+    person = (Person) RequestResponseHandler.handleResponse(channel);
     return person;
   }
 
+  @Override
   public List<PersonInterface> readAll() {
     List<PersonInterface> list = new ArrayList<>();
     String command = "READ *";
     DatabaseRequestInterface request = new DatabaseRequest(sender, command, true);
-    handleRequest(request);
-    Object response =  handleResponse();
+    RequestResponseHandler.handleRequest(request, channel);
+    Object response =  RequestResponseHandler.handleResponse(channel);
     List<Object> arr = (List<Object>) response;
     for (Object obj : arr) {
       list.add((Person) obj);
@@ -46,21 +46,24 @@ public class Query implements QueryInterface {
     return list;
   }
 
+  @Override
   public void create(String name, Integer age) {
     String command = "CREATE "
             + name
             + " "
             + age;
     var request = new DatabaseRequest(sender, command);
-    handleRequest(request);
+    RequestResponseHandler.handleRequest(request, channel);
   }
 
+  @Override
   public void delete(Integer id) {
     String command = "DELETE " + id;
     DatabaseRequestInterface request  = new DatabaseRequest(sender, command);
-    handleRequest(request);
+    RequestResponseHandler.handleRequest(request, channel);
   }
 
+  @Override
   public void updateName(Integer id, String newValue) {
     String command = "UPDATE "
             + id
@@ -68,9 +71,10 @@ public class Query implements QueryInterface {
             + newValue;
 
     DatabaseRequestInterface request = new DatabaseRequest(sender, command);
-    handleRequest(request);
+    RequestResponseHandler.handleRequest(request, channel);
   }
 
+  @Override
   public void updateAge(Integer id, Integer newValue) {
     String command = "UPDATE "
             + id
@@ -78,22 +82,15 @@ public class Query implements QueryInterface {
             + newValue;
 
     DatabaseRequestInterface request = new DatabaseRequest(sender, command);
-    handleRequest(request);
+    RequestResponseHandler.handleRequest(request, channel);
   }
 
+  @Override
   public Object commit() {
     String command = "COMMIT";
     DatabaseRequestInterface request = new DatabaseRequest(sender, command, true);
-    handleRequest(request);
-    return handleResponse();
-  }
-
-  public Object handleResponse() {
-    return channel.readResponse();
-  }
-
-  public void handleRequest(DatabaseRequestInterface request) {
-    channel.sendRequest(request);
+    RequestResponseHandler.handleRequest(request, channel);
+    return RequestResponseHandler.handleResponse(channel);
   }
 
 }

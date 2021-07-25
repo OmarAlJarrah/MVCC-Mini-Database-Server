@@ -6,12 +6,12 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Update implements DatabaseUpdate {
-  private final File databaseFile;
+  private final File DATABASE_FILE;
   TransactionDataInterface transactionData;
   
   public Update(File databaseFile, TransactionDataInterface transactionData) {
     this.transactionData = transactionData;
-    this.databaseFile = databaseFile;
+    this.DATABASE_FILE = databaseFile;
   }
 
   @Override
@@ -25,41 +25,29 @@ public class Update implements DatabaseUpdate {
   }
   
   public void update(Integer id, String property, Object newValue) {
-    PersonInterface person = new NullPerson();
+    PersonInterface person = PersonFactory.makeNullPerson();
     var list = new ArrayList<Object>();
     try (var reader = new ObjectInputStream(
-            new FileInputStream(databaseFile))) {
-      synchronized (this) {
+            new FileInputStream(DATABASE_FILE))) {
         do {
-          System.out.println("DOING");
           person = (PersonInterface) reader.readObject();
-          System.out.println(id + " compared to " + person.getId());
           if (person.getId().equals(id)) {
             if (property.equalsIgnoreCase("name")) {
-              System.out.println("Old name = " + person.getName());
-              person.setName((String) newValue);
-              System.out.println("New name = " + person.getName());
+              person.setFirstName((String) newValue);
             } else {
-              System.out.println("Old age = " + person.getAge());
               person.setAge((Integer) newValue);
-              System.out.println("New age = " + person.getAge());
             }
           }
           list.add(person);
         } while (true);
-      }
     } catch (EOFException eofException) {
       // As expected
-      new Log(Update.class.getName()).info(eofException);
     } catch (IOException | ClassNotFoundException exception) {
       new Log(Update.class.getName()).warning(exception);
     }
 
-    synchronized (databaseFile) {
       transactionData.registerWrite(id);
-      new ObjectWriter().writeNewList(databaseFile, list);
-    }
-
+      new ObjectWriter().writeNewList(DATABASE_FILE, list);
   }
 
 }

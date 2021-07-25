@@ -2,7 +2,7 @@ package com.atypon.authorization;
 
 public class AdminType implements UserType {
   @Override
-  public String getType() {
+  public final String getType() {
     return "Admin";
   }
 }

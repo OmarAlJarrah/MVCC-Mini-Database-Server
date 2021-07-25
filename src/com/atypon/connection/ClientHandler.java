@@ -21,9 +21,8 @@ public class ClientHandler implements Runnable {
 
   public void run() {
     try {
-      System.out.println("Starting "+request.getRequest());
-        var username = request.getSender();
-        var database = DatabaseServer.getClientDatabase(username);
+        String userName = request.getSender();
+        var database = DatabaseServer.getClientDatabase(userName);
         if (Boolean.TRUE.equals(request.getResponseExpected())) {
           outputStream = new ObjectOutputStream(socket.getOutputStream());
           var translator = new QueryTranslator(database);
@@ -32,8 +31,6 @@ public class ClientHandler implements Runnable {
         } else {
           new QueryTranslator(database).translate(request);
         }
-      System.out.println("Done with " + request.getRequest());
-
     } catch (IOException exception) {
       new Log(ClientHandler.class.getName()).
               warning(exception);

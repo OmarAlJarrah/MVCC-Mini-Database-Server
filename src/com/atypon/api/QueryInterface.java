@@ -5,10 +5,6 @@ import java.util.List;
 
 public interface QueryInterface {
 
-  void handleRequest(DatabaseRequestInterface request);
-
-  Object handleResponse();
-
   Object commit();
 
   void updateAge(Integer id, Integer newValue);

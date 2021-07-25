@@ -5,29 +5,23 @@ import java.util.Objects;
 
 public class Person implements Serializable, PersonInterface {
   private static final Long serialVersionUID = 1L;
-  private String name = null;
-  private Integer id = null;
+  private String firstName = "";
+  private int id = 0;
   private int age = 0;
 
-  public Person(){}
-
-  public Person(String name, int age) {
-    id = IdFactory.generateId();
-    this.age = age;
-    this.name = name;
-  }
+  public Person() {}
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof Person)) return false;
     var person = (Person) o;
-    return age == person.age && Objects.equals(name, person.name) && Objects.equals(id, person.id);
+    return age == person.age && Objects.equals(firstName, person.firstName) && Objects.equals(id, person.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, id, age);
+    return Objects.hash(firstName, id, age);
   }
 
   @Override
@@ -35,18 +29,27 @@ public class Person implements Serializable, PersonInterface {
     return id;
   }
 
-  public String getName() {
-    return name;
+  @Override
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  @Override
+  public String getFirstName() {
+    return firstName;
   }
 
+  @Override
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  @Override
   public int getAge() {
     return age;
   }
 
+  @Override
   public void setAge(int age) {
     this.age = age;
   }
