@@ -1,15 +1,10 @@
 package com.atypon.database;
 
-import com.atypon.files.Log;
 import com.atypon.files.ObjectReader;
 import com.atypon.files.ObjectWriter;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Create implements DatabaseCreate {
   File file;

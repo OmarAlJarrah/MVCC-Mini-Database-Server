@@ -17,6 +17,7 @@ public class CommunicationChannel implements CommunicationChannelInterface {
     this.socket = client.getSocket();
   }
 
+  @Override
   public void sendRequest(DatabaseRequestInterface request) {
     try {
       resetOutputStream();
@@ -27,6 +28,7 @@ public class CommunicationChannel implements CommunicationChannelInterface {
     }
   }
 
+  @Override
   public Object readResponse() {
     Object object = new NullObject();
     try {
@@ -39,6 +41,7 @@ public class CommunicationChannel implements CommunicationChannelInterface {
     return object;
   }
 
+  @Override
   public Socket getSocket() {
     return socket;
   }

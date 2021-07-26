@@ -1,7 +1,9 @@
 package com.atypon.connection;
 import com.atypon.api.LoginRequest;
+import com.atypon.api.LoginRequestInterface;
 import com.atypon.authorization.AccessType;
 import com.atypon.database.ClientData;
+import com.atypon.database.ClientDataInterface;
 import com.atypon.database.CoreDatabase;
 import com.atypon.database.Database;
 import com.atypon.files.FilesManager;
@@ -16,11 +18,11 @@ import java.net.Socket;
 
 public class AccessLayer {
 
-  private static ServerSocket           routerServerSocket;
-  private static Socket                 routerSocket;
-  private static final int              PORT = 2000;
-  private static final File             CLIENTS_FILE = FilesManager.CLIENTS_DATA_FILE;
-  private static final File             USER_COMMIT_HISTORY_FILE = FilesManager.COMMITS_FILE;
+  private static ServerSocket routerServerSocket;
+  private static Socket routerSocket;
+  private static final int PORT = 2000;
+  private static final File CLIENTS_FILE = FilesManager.CLIENTS_DATA_FILE;
+  private static final File USER_COMMIT_HISTORY_FILE = FilesManager.COMMITS_FILE;
 
   static {
     try {
@@ -57,8 +59,8 @@ public class AccessLayer {
     return access;
   }
 
-  public static synchronized LoginRequest readLoginRequest(){
-    var loginRequest = new LoginRequest("");
+  public static synchronized LoginRequestInterface readLoginRequest(){
+    LoginRequestInterface loginRequest = new LoginRequest("");
     try {
       var in = new ObjectInputStream(routerSocket.getInputStream());
       loginRequest = (LoginRequest) in.readObject();
@@ -69,13 +71,13 @@ public class AccessLayer {
   }
 
 
-  private static synchronized void registerClient(AccessType access, LoginRequest loginRequest){
+  private static synchronized void registerClient(AccessType access, LoginRequestInterface loginRequest){
     if (access.getAccess()) {
-      var user = loginRequest.getUserName();
+      String user = loginRequest.getUserName();
       if (!checkRegistrationStatus(user)){
-        var writer = new ObjectWriter();
-        var db = new Database(CoreDatabase.getNewVersion());
-        var clientData = new ClientData(user, db);
+        ObjectWriter writer = new ObjectWriter();
+        Database db = new Database(CoreDatabase.getNewVersion());
+        ClientDataInterface clientData = new ClientData(user, db);
         writer.write(CLIENTS_FILE, clientData);
       }
     }

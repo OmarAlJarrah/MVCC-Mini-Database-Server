@@ -1,7 +1,9 @@
 package com.atypon.connection;
 
 import com.atypon.api.DatabaseRequestInterface;
+import com.atypon.database.DatabaseInterface;
 import com.atypon.database.QueryTranslator;
+import com.atypon.database.TranslatorInterface;
 import com.atypon.files.Log;
 
 import java.io.IOException;
@@ -22,11 +24,11 @@ public class ClientHandler implements Runnable {
   public void run() {
     try {
         String userName = request.getSender();
-        var database = DatabaseServer.getClientDatabase(userName);
+        DatabaseInterface database = DatabaseServer.getClientDatabase(userName);
         if (Boolean.TRUE.equals(request.getResponseExpected())) {
           outputStream = new ObjectOutputStream(socket.getOutputStream());
-          var translator = new QueryTranslator(database);
-          var object = translator.translate(request);
+          TranslatorInterface translator = new QueryTranslator(database);
+          Object object = translator.translate(request);
           outputStream.writeObject(object);
         } else {
           new QueryTranslator(database).translate(request);

@@ -13,11 +13,11 @@ public class DatabaseApi {
     CLIENT = new Client(username, userIp);
   }
 
-  public Object read(Integer id) throws IOException, DeniedAccessException {
+  public Object read(Integer id) throws DeniedAccessException {
     return new Query(CLIENT).read(id);
   }
 
-  public List<PersonInterface> readAll() throws IOException, DeniedAccessException {
+  public List<PersonInterface> readAll() throws  DeniedAccessException {
     return new Query(CLIENT).readAll();
   }
 
@@ -37,7 +37,7 @@ public class DatabaseApi {
     new Query(CLIENT).create(name, age);
   }
 
-  public Object commit() throws IOException, DeniedAccessException {
+  public Object commit() throws DeniedAccessException {
     return new Query(CLIENT).commit();
   }
 }

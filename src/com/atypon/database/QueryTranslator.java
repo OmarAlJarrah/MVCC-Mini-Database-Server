@@ -5,13 +5,16 @@ import com.atypon.connection.AccessLayer;
 import com.atypon.files.Log;
 import com.atypon.files.NullObject;
 
-public class QueryTranslator implements TranslatorInterface {
-  Database database;
+import java.io.File;
 
-  public QueryTranslator(Database database){
+public class QueryTranslator implements TranslatorInterface {
+  DatabaseInterface database;
+
+  public QueryTranslator(DatabaseInterface database){
     this.database = database;
   }
 
+  @Override
   public synchronized Object translate(DatabaseRequestInterface request) {
 
     synchronized (database.getDatabaseFile()) {

@@ -8,11 +8,12 @@ public class ClientData implements Serializable, ClientDataInterface {
   private final Database database;
   private final Date connectionDate;
 
+  @Override
   public Database getDatabase() {
     return database;
   }
 
-
+  @Override
   public String getUser() {
     return user;
   }
@@ -23,6 +24,7 @@ public class ClientData implements Serializable, ClientDataInterface {
     this.connectionDate = new Date();
   }
 
+  @Override
   public Date getConnectionTime() {
     return connectionDate;
   }

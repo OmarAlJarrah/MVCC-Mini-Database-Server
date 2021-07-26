@@ -18,13 +18,14 @@ public class Read implements DatabaseRead {
 
   @Override
   public Object read(Integer id) {
-    Person person = new NullPerson();
+    PersonInterface person;
     try (var reader = new ObjectInputStream(
             new FileInputStream(databaseFile))) {
       do {
         person = (Person) reader.readObject();
       } while (!person.getId().equals(id));
     } catch (IOException | ClassNotFoundException exception) {
+      person = PersonFactory.makeNullPerson();
       new Log(Read.class.getName())
               .warning(exception);
     }
@@ -40,7 +41,7 @@ public class Read implements DatabaseRead {
       synchronized (this){
         do {
           Object object = reader.readObject();
-          PersonInterface person = (PersonInterface) object;
+          PersonInterface person = (Person) object;
           Integer id = person.getId();
           output.add(object);
           transactionData.registerRead(id);

@@ -21,8 +21,9 @@ public class ConnectionRequest implements ConnectionRequestInterface {
     this.SOCKET = new Socket(ip, PORT);
   }
 
+  @Override
   public AccessType login() {
-    var loginRequest = new LoginRequest(CLIENT_USER_NAME);
+    LoginRequestInterface loginRequest = new LoginRequest(CLIENT_USER_NAME);
     AccessType access = new DeniedAccess();
 
     try {
@@ -38,15 +39,17 @@ public class ConnectionRequest implements ConnectionRequestInterface {
     return access;
   }
 
-  public void sendLoginRequest(LoginRequest loginRequest) throws IOException {
+  @Override
+  public void sendLoginRequest(LoginRequestInterface loginRequest) throws IOException {
     var outputStream = new ObjectOutputStream(
             SOCKET.getOutputStream());
     outputStream.writeObject(loginRequest);
     outputStream.flush();
   }
 
+  @Override
   public AccessType readLoginResponse()  {
-    ObjectInputStream inputStream = null;
+    ObjectInputStream inputStream;
     try {
       inputStream = new ObjectInputStream(
               SOCKET.getInputStream());
@@ -57,6 +60,7 @@ public class ConnectionRequest implements ConnectionRequestInterface {
     return null;
   }
 
+  @Override
   public Integer getDatabasePort(String ip) throws DeniedAccessException {
     AccessType access = login();
     if (!access.getAccess()) {

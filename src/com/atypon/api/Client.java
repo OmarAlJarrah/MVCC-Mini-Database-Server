@@ -14,19 +14,22 @@ public class Client implements ClientInterface {
     this.IP = IP;
   }
 
-  public void refresh() throws DeniedAccessException, IOException {
+  public void refreshConnection() throws DeniedAccessException, IOException {
     this.clientConnection = new ClientConnection(this);
   }
 
+  @Override
   public Socket getSocket() throws DeniedAccessException, IOException {
-    refresh();
+    refreshConnection();
     return clientConnection.getSOCKET();
   }
 
+  @Override
   public String getUsername() {
     return USER_NAME;
   }
 
+  @Override
   public String getIP() {
     return IP;
   }

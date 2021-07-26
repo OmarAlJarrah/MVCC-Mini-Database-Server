@@ -25,12 +25,12 @@ public class Update implements DatabaseUpdate {
   }
   
   public void update(Integer id, String property, Object newValue) {
-    PersonInterface person = PersonFactory.makeNullPerson();
-    var list = new ArrayList<Object>();
+    PersonInterface person;
+    ArrayList<Object> list = new ArrayList<>();
     try (var reader = new ObjectInputStream(
             new FileInputStream(DATABASE_FILE))) {
         do {
-          person = (PersonInterface) reader.readObject();
+          person = (Person) reader.readObject();
           if (person.getId().equals(id)) {
             if (property.equalsIgnoreCase("name")) {
               person.setFirstName((String) newValue);

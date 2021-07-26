@@ -47,10 +47,12 @@ public class User implements UserInterface, Serializable {
     return Objects.hash(USER_ID, ACCESS_TYPE);
   }
 
+  @Override
   public String getUsername() {
     return username;
   }
 
+  @Override
   public void setUsername(String username) {
     this.username = username;
   }

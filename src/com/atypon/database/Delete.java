@@ -17,7 +17,7 @@ public class Delete implements DatabaseDelete {
 
   @Override
   public void delete(Integer id) {
-    PersonInterface person = PersonFactory.makeNullPerson();
+    PersonInterface person;
     var list = new ArrayList<>();
     try (var reader = new ObjectInputStream(
             new FileInputStream(databaseFile))) {
@@ -33,7 +33,7 @@ public class Delete implements DatabaseDelete {
       new Log(Delete.class.getName()).
               warning(exception);
     }
-      var writer = new ObjectWriter();
+      ObjectWriter writer = new ObjectWriter();
       writer.writeNewList(databaseFile, list);
       transactionData.registerWrite(id);
   }

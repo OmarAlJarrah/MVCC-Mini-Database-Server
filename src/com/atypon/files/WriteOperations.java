@@ -9,4 +9,6 @@ public interface WriteOperations {
   void writeList(File file, ArrayList<Object> arrayList);
 
   void writeNewList(File file, ArrayList<Object> arrayList);
+
+  void discard(File databaseFile);
 }

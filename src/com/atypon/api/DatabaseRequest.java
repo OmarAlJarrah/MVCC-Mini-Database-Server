@@ -3,19 +3,19 @@ package com.atypon.api;
 import java.io.Serializable;
 
 public class DatabaseRequest implements Serializable, DatabaseRequestInterface {
-  private String sender = "";
-  private String request = "";
+  private final String SENDER;
+  private final String REQUEST;
   private Boolean responseExpected = false;
 
 
   public DatabaseRequest(String sender, String request) {
-    this.sender = sender;
-    this.request = request;
+    this.SENDER = sender;
+    this.REQUEST = request;
   }
 
   public DatabaseRequest(String sender, String request, Boolean responseExpected) {
-    this.sender = sender;
-    this.request = request;
+    this.SENDER = sender;
+    this.REQUEST = request;
     this.responseExpected = responseExpected;
   }
 
@@ -23,14 +23,17 @@ public class DatabaseRequest implements Serializable, DatabaseRequestInterface {
     this.responseExpected = responseExpected;
   }
 
+  @Override
   public String getSender() {
-    return sender;
+    return SENDER;
   }
 
+  @Override
   public String getRequest() {
-    return request;
+    return REQUEST;
   }
 
+  @Override
   public Boolean getResponseExpected() {
     return responseExpected;
   }

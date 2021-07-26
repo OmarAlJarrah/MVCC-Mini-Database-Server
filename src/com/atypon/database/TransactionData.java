@@ -6,42 +6,42 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class TransactionData implements Serializable, TransactionDataInterface {
-  private final HashSet<Integer> readSet = new HashSet<>();
-  private final HashSet<Integer> writeSet = new HashSet<>();
+  private final HashSet<Integer> READ_SET = new HashSet<>();
+  private final HashSet<Integer> WRITE_SET = new HashSet<>();
 
 
   @Override
   public void registerRead(Integer id) {
     synchronized (this){
-      readSet.add(id);
+      READ_SET.add(id);
     }
   }
 
   @Override
   public void registerWrite(Integer id) {
     synchronized (this) {
-      writeSet.add(id);
+      WRITE_SET.add(id);
     }
   }
 
   @Override
   public Set<Integer> getReadSet() {
     synchronized (this){
-      return readSet;
+      return READ_SET;
     }
   }
 
   @Override
   public Set<Integer> getWriteSet() {
     synchronized (this){
-      return writeSet;
+      return WRITE_SET;
     }
   }
 
   @Override
   public Boolean checkConflict(TransactionDataInterface other) {
-    readSet.retainAll(other.getWriteSet());
-    writeSet.retainAll(other.getWriteSet());
-    return !readSet.isEmpty() && !writeSet.isEmpty();
+    READ_SET.retainAll(other.getWriteSet());
+    WRITE_SET.retainAll(other.getWriteSet());
+    return !READ_SET.isEmpty() && !WRITE_SET.isEmpty();
   }
 }

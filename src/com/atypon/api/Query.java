@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Query implements QueryInterface {
-  CommunicationChannelInterface channel;
+  private CommunicationChannelInterface channel;
   private String sender;
 
   public Query(ClientInterface client) throws DeniedAccessException {
@@ -24,7 +24,7 @@ public class Query implements QueryInterface {
 
   @Override
   public PersonInterface read(Integer id) {
-    Person person;
+    PersonInterface person;
     String command = "READ " + id;
     DatabaseRequestInterface request = new DatabaseRequest(sender, command, true);
     RequestResponseHandler.handleRequest(request, channel);

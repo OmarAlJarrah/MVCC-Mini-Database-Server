@@ -10,7 +10,7 @@ public interface ConnectionRequestInterface {
 
   AccessType readLoginResponse() throws IOException, ClassNotFoundException;
 
-  void sendLoginRequest(LoginRequest loginRequest) throws IOException;
+  void sendLoginRequest(LoginRequestInterface loginRequest) throws IOException;
 
   AccessType login();
 }

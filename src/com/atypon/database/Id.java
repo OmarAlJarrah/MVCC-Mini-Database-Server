@@ -12,8 +12,8 @@ public class Id implements IdFactoryInterface {
   private static final File ID_FILE = FilesManager.ID_FILE;
 
   private static synchronized void update(Integer value) {
-    var writer = new ObjectWriter();
-    var list = new ArrayList<>();
+    ObjectWriter writer = new ObjectWriter();
+    ArrayList<Object> list = new ArrayList<>();
     list.add(value);
     writer.writeNewList(ID_FILE, list);
   }
@@ -21,12 +21,9 @@ public class Id implements IdFactoryInterface {
   @Override
   public Integer generateId() {
     AtomicReference<Integer> id = new AtomicReference<>(0);
-    try  {
-      var reader = new ObjectReader();
-      id.set((Integer) reader.read(ID_FILE));
-    } finally {
-      update(id.get() +1);
-    }
+    ObjectReader reader = new ObjectReader();
+    id.set((Integer) reader.read(ID_FILE));
+    update(id.get() +1);
     return id.get();
   }
 }

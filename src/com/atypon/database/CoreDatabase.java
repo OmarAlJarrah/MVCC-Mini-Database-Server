@@ -3,8 +3,8 @@ package com.atypon.database;
 import com.atypon.files.FilesManager;
 import com.atypon.files.ObjectReader;
 import com.atypon.files.ObjectWriter;
-
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CoreDatabase {
@@ -15,21 +15,16 @@ public class CoreDatabase {
 
   private CoreDatabase(){}
   public static synchronized File getNewVersion() {
-    var file = new File(("db-"+new Date().toString())+".txt");
-    var reader = new ObjectReader();
-    var writer = new ObjectWriter();
-    var dataList = reader.readAll(DATABASE_FILE);
-
+    File file = new File(("db-"+new Date())+".txt");
+    ObjectReader reader = new ObjectReader();
+    ObjectWriter writer = new ObjectWriter();
+    ArrayList<Object> dataList = reader.readAll(DATABASE_FILE);
     writer.writeNewList(file, dataList);
     return file;
   }
 
   public static File getDatabaseFile() {
     return DATABASE_FILE;
-  }
-
-  public static String getDatabasePath() {
-    return "";
   }
 
   public static File getCommitsFile() {

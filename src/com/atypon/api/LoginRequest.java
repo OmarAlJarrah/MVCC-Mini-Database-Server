@@ -9,6 +9,7 @@ public class LoginRequest implements Serializable, LoginRequestInterface {
     this.USER_NAME = USER_NAME;
   }
 
+  @Override
   public String getUserName() {
     return USER_NAME;
   }
