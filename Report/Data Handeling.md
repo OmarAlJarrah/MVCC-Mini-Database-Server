@@ -33,6 +33,9 @@
       giving a reference to all the files this way provides more readability, and more independency to the classes, which implies that
       any future modifications on the files can be done easier without the need to modify code.
       
+      ![FilesManager](https://user-images.githubusercontent.com/50204418/127238672-b15a0088-667b-4e45-9623-31c4becd2da8.png)
+
+      
     
 ### 3) Reading/Writing & Memory
   + All data that are to be written/read by the client do not use buffering, which insures the management of RAM usage, on the other hand, 
