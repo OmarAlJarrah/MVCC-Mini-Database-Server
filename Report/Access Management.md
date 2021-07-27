@@ -38,3 +38,6 @@
         registerClient(access, login);
       }
       ```
+      
+  + Registration process opens a new session for the client, giving him a version of the database that is present on the disk until the client 
+      finish their session.
