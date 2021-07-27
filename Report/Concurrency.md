@@ -18,6 +18,11 @@
       clientData = new ClientData(user, databaseVersion);
       write(CLIENTS_FILE, clientData);
       ```
+      
+  + As each client have their own version of the database, any modifications or reads will be processed using their version, which implies a 
+      sequential access to version per client.
+      
+  ![db_diagram png](https://user-images.githubusercontent.com/50204418/127238519-2e4660e8-8edd-4ebb-a8c2-00114426bb76.png)
 
       
 ### How the commit works?
