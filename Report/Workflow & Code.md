@@ -1,4 +1,4 @@
-# Workflow
+# Workflow Sample
 
   + When a client imports the ```DatabaseApi```, they create a new instance of the class passing their ```username``` & ```ipAddress``` as a parameter, 
       creating a new instance will configure the connection with the server.
