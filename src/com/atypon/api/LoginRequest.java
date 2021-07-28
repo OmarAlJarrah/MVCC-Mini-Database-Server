@@ -1,8 +1,6 @@
 package com.atypon.api;
 
-import java.io.Serializable;
-
-public class LoginRequest implements Serializable, LoginRequestInterface {
+public class LoginRequest implements  LoginRequestInterface {
   private final String USER_NAME;
 
   public LoginRequest(String USER_NAME) {

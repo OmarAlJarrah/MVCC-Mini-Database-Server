@@ -2,6 +2,8 @@ package com.atypon.database;
 
 import com.atypon.files.Log;
 import com.atypon.files.ObjectWriter;
+import com.atypon.files.WriteOperation;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -45,9 +47,9 @@ public class Update implements DatabaseUpdate {
     } catch (IOException | ClassNotFoundException exception) {
       new Log(Update.class.getName()).warning(exception);
     }
-
       transactionData.registerWrite(id);
-      new ObjectWriter().writeNewList(DATABASE_FILE, list);
+    WriteOperation writer = new ObjectWriter();
+    writer.writeNewList(DATABASE_FILE, list);
   }
 
 }

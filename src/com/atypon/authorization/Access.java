@@ -1,6 +1,9 @@
 package com.atypon.authorization;
+
 import com.atypon.files.FilesManager;
 import com.atypon.files.ObjectReader;
+import com.atypon.files.ReadOperation;
+
 import java.io.File;
 
 public class Access {
@@ -9,7 +12,7 @@ public class Access {
   private Access(){}
 
   public static synchronized void getAccess(String username) throws DeniedAccessException {
-    var reader = new ObjectReader();
+    ReadOperation reader = new ObjectReader();
     for (Object obj : reader.readAll(USER_DATA)) {
       if (((UserInterface)obj).login(username)) {
         return;

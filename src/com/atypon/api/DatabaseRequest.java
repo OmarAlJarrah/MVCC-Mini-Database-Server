@@ -1,8 +1,6 @@
 package com.atypon.api;
 
-import java.io.Serializable;
-
-public class DatabaseRequest implements Serializable, DatabaseRequestInterface {
+public class DatabaseRequest implements DatabaseRequestInterface {
   private final String SENDER;
   private final String REQUEST;
   private Boolean responseExpected = false;

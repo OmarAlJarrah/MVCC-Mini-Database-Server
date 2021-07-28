@@ -3,6 +3,7 @@ package com.atypon.connection;
 import com.atypon.api.DatabaseRequestInterface;
 import com.atypon.database.ClientData;
 import com.atypon.database.Database;
+import com.atypon.database.DatabaseInterface;
 import com.atypon.files.FilesManager;
 import com.atypon.files.Log;
 import com.atypon.files.ObjectReader;
@@ -42,7 +43,7 @@ public class DatabaseServer {
     }
   }
 
-  public static synchronized Database getClientDatabase(String username) {
+  public static synchronized DatabaseInterface getClientDatabase(String username) {
     ObjectReader reader = new ObjectReader();
     File clientsData = FilesManager.CLIENTS_DATA_FILE;
     List<Object> list = reader.readAll(clientsData);

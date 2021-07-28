@@ -2,8 +2,8 @@ package com.atypon.authorization;
 
 import com.atypon.files.ObjectReader;
 import com.atypon.files.ObjectWriter;
-import com.atypon.files.ReadOperations;
-import com.atypon.files.WriteOperations;
+import com.atypon.files.ReadOperation;
+import com.atypon.files.WriteOperation;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class Admin implements AdminInterface {
 
   @Override
   public synchronized void deleteUser(String username) throws IOException, ClassNotFoundException {
-    ReadOperations reader = new ObjectReader();
+    ReadOperation reader = new ObjectReader();
     ArrayList<Object> list = new ArrayList<>();
     for (Object obj : reader.readAll(USERS_DATA)) {
       if (((UserInterface)obj).login(username)) {
@@ -29,7 +29,7 @@ public class Admin implements AdminInterface {
       }
       list.add(obj);
     }
-    WriteOperations writer = new ObjectWriter();
+    WriteOperation writer = new ObjectWriter();
     writer.writeNewList(USERS_DATA, list);
   }
 }

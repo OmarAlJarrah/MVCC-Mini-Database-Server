@@ -3,7 +3,6 @@ package com.atypon.api;
 
 import com.atypon.authorization.DeniedAccessException;
 import com.atypon.database.PersonInterface;
-import java.io.IOException;
 import java.util.List;
 
 public class DatabaseApi {

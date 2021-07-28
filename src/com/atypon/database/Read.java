@@ -38,7 +38,6 @@ public class Read implements DatabaseRead {
     List<Object> output = new ArrayList<>();
     try (var reader = new ObjectInputStream(
             new FileInputStream(databaseFile))) {
-      synchronized (this){
         do {
           Object object = reader.readObject();
           PersonInterface person = (Person) object;
@@ -46,8 +45,7 @@ public class Read implements DatabaseRead {
           output.add(object);
           transactionData.registerRead(id);
         } while (true);
-      }
-    } catch (EOFException eofException){
+    } catch (EOFException eofException) {
       // as expected
     } catch (IOException | ClassNotFoundException exception) {
       new Log(Read.class.getName()).warning(exception);

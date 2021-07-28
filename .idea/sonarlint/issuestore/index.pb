@@ -1,29 +1,15 @@
 
-`
-0src/com/atypon/api/DatabaseRequestInterface.java,5/7/57e9fb4a114561e83d7c327494aa1471979dbd6d
-g
-7src/com/atypon/authorization/DeniedAccessException.java,e/1/e1427ea6dcd4e31e3dc901c78aafc7181723523f
 [
 +src/com/atypon/database/DatabaseDelete.java,1/0/10761a1bc55b3c56d5edf95737eda1e9b038b9f2
 c
 3src/com/atypon/database/InvalidCommitException.java,6/3/6342662cd5f7b7276e2061d82c7210e431f54c4c
-V
-&src/com/atypon/files/FilesManager.java,7/a/7a4f714c00776fa9598c26eba9089d6065e5b0d1
 M
 src/com/atypon/files/Log.java,1/f/1f823050dd926a29a8065ecd2320a4b8ba23bf6f
-V
-&src/com/atypon/files/ObjectReader.java,9/a/9a6b040a0fcb44711fa7f5847cbd88552d9529d1
 T
 $src/com/atypon/api/ApiInterface.java,c/a/ca5c28beb6af70b38387568acf27411d376b591b
 W
 'src/com/atypon/api/ClientInterface.java,2/e/2e5d15680c9846e2eba260e6a3521e093a457b81
-^
-.src/com/atypon/authorization/DeniedAccess.java,e/8/e8f688b7d4fac66b8eb84e5441d9588824a6fced
-]
--src/com/atypon/api/LoginRequestInterface.java,5/9/597ff17601a23f437bb88d2cce7374c5e7ed3fae
 V
 &src/com/atypon/api/QueryInterface.java,3/8/38e7095e568e03aee9e43615254a54ce790efcdf
-_
-/src/com/atypon/authorization/UserInterface.java,e/2/e2dc5e7d61e2b63ca9709f51364ec3e7a9c75635
 e
 5src/com/atypon/api/CommunicationChannelInterface.java,e/8/e802a26378b16c04d2f918bfd35a7b56b149a3d5

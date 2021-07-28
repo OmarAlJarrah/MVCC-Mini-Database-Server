@@ -1,6 +1,7 @@
 package com.atypon.database;
 
 import com.atypon.files.FilesManager;
+import com.atypon.files.NullObject;
 import com.atypon.files.ObjectReader;
 import com.atypon.files.ObjectWriter;
 
@@ -20,10 +21,15 @@ public class Id implements IdFactoryInterface {
 
   @Override
   public Integer generateId() {
-    AtomicReference<Integer> id = new AtomicReference<>(0);
+    Integer id = 0;
     ObjectReader reader = new ObjectReader();
-    id.set((Integer) reader.read(ID_FILE));
-    update(id.get() +1);
-    return id.get();
+    Object storedID = reader.read(ID_FILE);
+    if (storedID instanceof NullObject) {
+      id = (1);
+    } else {
+      id = ((Integer) storedID);
+    }
+    update(id +1);
+    return id;
   }
 }

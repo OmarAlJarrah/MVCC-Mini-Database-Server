@@ -1,9 +1,8 @@
 package com.atypon.authorization;
 
-import java.io.*;
 import java.util.Objects;
 
-public class User implements UserInterface, Serializable {
+public class User implements UserInterface {
   private final String USER_ID;
   private final String ACCESS_TYPE;
 

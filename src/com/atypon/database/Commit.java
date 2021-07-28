@@ -1,9 +1,6 @@
 package com.atypon.database;
 
-import com.atypon.files.FilesManager;
-import com.atypon.files.ObjectReader;
-import com.atypon.files.ObjectWriter;
-import com.atypon.files.WriteOperations;
+import com.atypon.files.*;
 
 import java.io.File;
 import java.io.Serializable;
@@ -30,7 +27,7 @@ public class Commit implements Serializable, CommitInterface {
           try {
             checkCommitStatus();
             registerCommit();
-            Database database = CLIENT_DATA.getDatabase();
+            DatabaseInterface database = CLIENT_DATA.getDatabase();
             File file = database.getDatabaseFile();
             CoreDatabase.commit(file);
             cleanSession();
@@ -45,7 +42,7 @@ public class Commit implements Serializable, CommitInterface {
   }
 
   private void checkCommitStatus() throws InvalidCommitException {
-    ObjectReader reader = new ObjectReader();
+    ReadOperation reader = new ObjectReader();
     ArrayList<Object> commitsList = reader.readAll(COMMITS_FILE);
 
     for (Object object : commitsList) {
@@ -74,17 +71,17 @@ public class Commit implements Serializable, CommitInterface {
   }
 
   private void registerCommit() {
-    var commitsFile = CoreDatabase.getCommitsFile();
-    var writer = new ObjectWriter();
+    File commitsFile = CoreDatabase.getCommitsFile();
+    WriteOperation writer = new ObjectWriter();
     writer.write(commitsFile, this);
   }
 
-  private synchronized void cleanSession(){
+  private void cleanSession(){
     ObjectReader reader = new ObjectReader();
     File clientsDateFile = FilesManager.CLIENTS_DATA_FILE;
     ArrayList<Object> list = reader.readAll(clientsDateFile);
     ArrayList<Object> newList = new ArrayList<>();
-    WriteOperations writer = new ObjectWriter();
+    WriteOperation writer = new ObjectWriter();
 
     for (Object object : list) {
       var data = (ClientData) object;

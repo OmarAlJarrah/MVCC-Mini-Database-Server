@@ -2,7 +2,7 @@ package com.atypon.database;
 
 import com.atypon.files.ObjectReader;
 import com.atypon.files.ObjectWriter;
-
+import com.atypon.files.WriteOperation;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -20,14 +20,9 @@ public class Create implements DatabaseCreate {
     ArrayList<Object> list = new ObjectReader().readAll(file);
     PersonInterface newPerson = PersonFactory.makePerson(name, age);
     list.add(newPerson);
-    synchronized (this) {
-      ObjectWriter writer = new ObjectWriter();
-      writer.writeNewList(file, list);
-    }
-    synchronized (this) {
-      transactionData.registerWrite(newPerson.getId());
-    }
-
+    WriteOperation writer = new ObjectWriter();
+    writer.writeNewList(file, list);
+    transactionData.registerWrite(newPerson.getId());
     return newPerson;
   }
 }

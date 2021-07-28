@@ -1,5 +1,7 @@
 package com.atypon.database;
 
-public interface CommitStatus {
+import java.io.Serializable;
+
+public interface CommitStatus extends Serializable {
   Boolean getStatus();
 }

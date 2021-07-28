@@ -1,5 +1,7 @@
 package com.atypon.authorization;
 
-public interface AccessType {
+import java.io.Serializable;
+
+public interface AccessType extends Serializable {
   boolean getAccess();
 }

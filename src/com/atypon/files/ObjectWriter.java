@@ -4,33 +4,29 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
-public class ObjectWriter implements WriteOperations {
+public class ObjectWriter implements WriteOperation {
   ArrayList<Object> objectArrayList;
 
   @Override
   public void write(File file, Object object) {
-      try {
-        ReadOperations read = new ObjectReader();
-        objectArrayList = new ArrayList<>();
-        objectArrayList.add(object);
-        objectArrayList.addAll(read.readAll(file));
-        writeNewList(file, objectArrayList);
-      } catch (IOException | ClassNotFoundException exception) {
-        new Log(ObjectWriter.class.getName()).warning(exception);
-      }
+    ReadOperation read = new ObjectReader();
+    objectArrayList = new ArrayList<>();
+    objectArrayList.add(object);
+    objectArrayList.addAll(read.readAll(file));
+    writeNewList(file, objectArrayList);
   }
 
   @Override
   public void writeList(File file, ArrayList<Object> arrayList) {
     try (ObjectOutputStream out = new ObjectOutputStream(
             new FileOutputStream(file))) {
-        ReadOperations read = new ObjectReader();
+        ReadOperation read = new ObjectReader();
         objectArrayList = read.readAll(file);
         objectArrayList.addAll(arrayList);
         for (Object obj : objectArrayList) {
           out.writeObject(obj);
         }
-      } catch (IOException | ClassNotFoundException exception) {
+      } catch (IOException exception) {
         new Log(ObjectWriter.class.getName()).warning(exception);
       }
   }

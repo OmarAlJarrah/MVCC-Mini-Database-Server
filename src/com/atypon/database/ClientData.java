@@ -1,15 +1,14 @@
 package com.atypon.database;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class ClientData implements Serializable, ClientDataInterface {
+public class ClientData implements ClientDataInterface {
   private final String user;
-  private final Database database;
+  private final DatabaseInterface database;
   private final Date connectionDate;
 
   @Override
-  public Database getDatabase() {
+  public DatabaseInterface getDatabase() {
     return database;
   }
 
@@ -18,7 +17,7 @@ public class ClientData implements Serializable, ClientDataInterface {
     return user;
   }
 
-  public ClientData(String user, Database database){
+  public ClientData(String user, DatabaseInterface database){
     this.database = database;
     this.user = user;
     this.connectionDate = new Date();

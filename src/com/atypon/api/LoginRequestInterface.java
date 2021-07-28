@@ -1,5 +1,7 @@
 package com.atypon.api;
 
-public interface LoginRequestInterface {
+import java.io.Serializable;
+
+public interface LoginRequestInterface extends Serializable {
   String getUserName();
 }

@@ -12,30 +12,22 @@ public class TransactionData implements Serializable, TransactionDataInterface {
 
   @Override
   public void registerRead(Integer id) {
-    synchronized (this){
       READ_SET.add(id);
-    }
   }
 
   @Override
   public void registerWrite(Integer id) {
-    synchronized (this) {
       WRITE_SET.add(id);
-    }
   }
 
   @Override
   public Set<Integer> getReadSet() {
-    synchronized (this){
       return READ_SET;
-    }
   }
 
   @Override
   public Set<Integer> getWriteSet() {
-    synchronized (this){
       return WRITE_SET;
-    }
   }
 
   @Override

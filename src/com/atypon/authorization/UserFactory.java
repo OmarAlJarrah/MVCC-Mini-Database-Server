@@ -8,8 +8,8 @@ public class UserFactory {
 
   private UserFactory() {}
 
-  public static synchronized UserInterface makeUser(UserType type) {
-    User newUser;
+  public static UserInterface makeUser(UserType type) {
+    UserInterface newUser;
     if (ADMIN.equals(type.getType())) {
       newUser = new User(UUID.randomUUID().toString(), ADMIN);
     } else {

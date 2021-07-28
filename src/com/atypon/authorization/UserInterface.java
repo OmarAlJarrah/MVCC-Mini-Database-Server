@@ -1,6 +1,8 @@
 package com.atypon.authorization;
 
-public interface UserInterface {
+import java.io.Serializable;
+
+public interface UserInterface extends Serializable {
   String getUSER_ID();
 
   String getACCESS_TYPE();

@@ -2,9 +2,10 @@ package com.atypon.database;
 
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 
-public interface DatabaseInterface {
+public interface DatabaseInterface extends Serializable {
   TransactionDataInterface getTransactionData();
 
 

@@ -1,8 +1,7 @@
 package com.atypon.authorization;
 
-import java.io.Serializable;
 
-public class GrantedAccess implements AccessType, Serializable {
+public class GrantedAccess implements AccessType {
   @Override
   public boolean getAccess() {
     return true;
