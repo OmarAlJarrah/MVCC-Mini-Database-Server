@@ -32,7 +32,7 @@ public class CommunicationChannel implements CommunicationChannelInterface {
   public Object readResponse() {
     Object object = new NullObject();
     try {
-      resetInputStreams();
+      resetInputStream();
       object = input.readObject();
     } catch (IOException | ClassNotFoundException exception) {
       new Log(Query.class.getName())
@@ -46,7 +46,7 @@ public class CommunicationChannel implements CommunicationChannelInterface {
     return socket;
   }
 
-  private void resetInputStreams() {
+  private void resetInputStream() {
     try {
       input = new ObjectInputStream(socket.getInputStream());
     } catch (IOException ioException) {

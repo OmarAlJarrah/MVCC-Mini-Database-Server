@@ -3,6 +3,7 @@ package com.atypon.api;
 import com.atypon.authorization.AccessType;
 import com.atypon.authorization.DeniedAccess;
 import com.atypon.authorization.DeniedAccessException;
+import com.atypon.connection.DatabaseServer;
 import com.atypon.files.FilesManager;
 import com.atypon.files.Log;
 import java.io.IOException;
@@ -66,6 +67,6 @@ public class ConnectionRequest implements ConnectionRequestInterface {
     if (!access.getAccess()) {
       throw new DeniedAccessException();
     }
-    return 2001;
+    return DatabaseServer.getPort();
   }
 }

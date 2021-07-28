@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.*;
 
-public class Cache implements Serializable {
+public class Cache extends Database implements CacheInterface {
   private static final Long serialVersionUID = 5L;
   private final Map<Integer, PersonInterface> readOnlyCache = new HashMap<>();
 

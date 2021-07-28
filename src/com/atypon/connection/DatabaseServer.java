@@ -2,7 +2,6 @@ package com.atypon.connection;
 
 import com.atypon.api.DatabaseRequestInterface;
 import com.atypon.database.ClientData;
-import com.atypon.database.Database;
 import com.atypon.database.DatabaseInterface;
 import com.atypon.files.FilesManager;
 import com.atypon.files.Log;
@@ -11,9 +10,10 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DatabaseServer {
-  private static final Integer PORT = 2001;
+  private static final AtomicInteger PORT = new AtomicInteger(2001);
   private static ServerSocket serverSocket;
   static ObjectInputStream objectInputStream;
 
@@ -22,7 +22,7 @@ public class DatabaseServer {
 
   public static void main(String[] args) throws IOException, ClassNotFoundException {
     try {
-      serverSocket = new ServerSocket(PORT);
+      serverSocket = new ServerSocket(PORT.get());
     } catch (IOException ioException) {
       new Log(DatabaseServer.class.getName()).
               warning(ioException);
@@ -57,6 +57,6 @@ public class DatabaseServer {
   }
 
   public static Integer getPort(){
-    return PORT;
+    return PORT.get();
   }
 }

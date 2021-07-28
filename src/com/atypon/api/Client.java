@@ -14,14 +14,17 @@ public class Client implements ClientInterface {
     this.IP = IP;
   }
 
-  public void refreshConnection() throws DeniedAccessException, IOException {
+  public void initConnection() throws DeniedAccessException, IOException {
+    if (this.clientConnection != null){
+      this.clientConnection.getSocket().close();
+    }
     this.clientConnection = new ClientConnection(this);
   }
 
   @Override
   public Socket getSocket() throws DeniedAccessException, IOException {
-    refreshConnection();
-    return clientConnection.getSOCKET();
+    initConnection();
+    return clientConnection.getSocket();
   }
 
   @Override

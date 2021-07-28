@@ -18,7 +18,7 @@ public class ClientConnection {
     this.SOCKET = new Socket(IP, PORT);
   }
 
-  public Socket getSOCKET() {
+  public Socket getSocket() {
     return this.SOCKET;
   }
 
