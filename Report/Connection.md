@@ -44,54 +44,73 @@
 
 ### Client Side
 
-+ In order for the client to establish connection with the server, they will send a connection request of type ```ConnectionRequest``` that should be
-    processed at the access layer first, once they get access, they will open a new socket for connectin with the server, then the client is registered
-    on the server as an ongoing connection.
-    
-+ Once a user is connected to the server, in order to do any of the CRUD operations he has to use the provided interface ```DatabaseApi```, that for each
-    CRUD operation, there will be a new request of type ```DatabaseRequest``` that includes the data of the requested operation sent to the server,
-    each request opens a new socket at the client side while the old socket (if any exist) is closed.
-  
-  ```
-  function refreshSocket() {
-    clientConnection.getSocket().close();
-    clientConnection = new ClientConnection(this);
-  }
-  ```
-    
-+ Each request sent or response recieved at the client side is handled through a special channel of type ```CommunicationChannel```, the communication
-    channel handles creating sockets, sending new requests & reading server responses. 
-    
-+ Any CRUD operation made through the API, will make a new object of type ```Query``` that will generate the right action request, then send it through
-    the communication channel to the server, the ```Query``` class works as backend for the ```DatabaseApi```.
+  + In order for the client to establish connection with the server, they will send a connection request of type ```ConnectionRequest``` that should be
+      which in place will configure ask for authorization from the access layer by sending a ```LoginRequest```.
+
+  + Once they get access, they will open a new socket for connectin with the server, then the client is registered on the server as an ongoing connection.
+
+  ![image](https://i1.wp.com/css-tricks.com/wp-content/uploads/2020/03/oauth-code-grant-flow.png?resize=1024%2C944&ssl=1)
+
+  + Once a user is connected to the server, in order to do any of the CRUD operations he has to use the provided interface ```DatabaseApi```, that for each
+      CRUD operation, there will be a new request of type ```DatabaseRequest``` that includes the data of the requested operation sent to the server,
+      each request opens a new socket at the client side while the old socket (if any exist) is closed.
+
+    ```
+    function initConnection() {
+      if (clientConnection != null) {
+        clientConnection.getSocket().close();
+      }
+      clientConnection = new ClientConnection(this);
+    }
+    ```
+
+
+  + Each request sent or response recieved at the client side is handled using the ```RequestResponseHandler```, that is an interface (as a concept) 
+      for using a special channel of type ```CommunicationChannel```, the communication channel handles creating sockets, sending new requests &
+      reading server responses. 
+      
+      ![CommunicationChannel](https://user-images.githubusercontent.com/50204418/127261116-b2d86d30-ecdb-46ad-92a9-0c9b36253b54.png)
+
+
+  + Any CRUD operation made through the API, will make a new object of type ```Query``` that will generate the right action request, then send it through
+      the communication channel to the server, the ```Query``` class works as backend for the ```DatabaseApi```.
 
     
 ### Server Side
 
-+ Once the client pass the routing layer & the access check, each query he sends is captured by the server in the main loop, and the request gets
-    read inorder to be processed.
-    ```
-    Main Loop {
-      socket = serverSocket.accept();
-      reader = inputStream(socket.getInputStream());
-      request = inputStream.readObject();
-    }
-    ```
-    
-+ After the request is read & is ready to be processed, the server will start a new thread to process the request as each request is processed
-    independently, then the server lets the ```ClientHandler``` class process the request.
-    ```
-    ---request got read---
-    new Thread(
-              new ClientHandler(request, socket)
-      ).start();
-    ```
-    
-+ In case a response by the server is expected, the ```ClientHandler``` class will handle sending the response through the server socket.
-    ```
-    if (responseExpected) {
-          outputStream = OutputStream(socket.getOutputStream());
-          ---Processed the request---
-          outputStream.writeObject(response);
-     }
-    ```
+  + Once the client pass the routing layer & the access check, each query he sends is captured by the server in the main loop, and the request gets
+      read inorder to be processed.
+      ```
+      Main Loop {
+        socket = serverSocket.accept();
+        reader = inputStream(socket.getInputStream());
+        request = inputStream.readObject();
+      }
+      ```
+
+  + After the request is read & is ready to be processed, the server will start a new thread to process the request as each request is processed
+      independently, then the server lets the ```ClientHandler``` class process the request.
+      ```
+      ---request got read---
+      new Thread(
+                new ClientHandler(request, socket)
+        ).start();
+      ```
+      
+  + The ```ClientHandler``` will ask for the client version of the database, that is stored on the disk & mapped to that specific client, 
+      as each client gets a version once they start a connection, the client handler will proccess the reqests on that version in a 
+      separate thread.
+
+  + In case a response by the server is expected, the ```ClientHandler``` class will handle sending the response through the server socket.
+      ```
+      if (responseExpected) {
+            outputStream = OutputStream(socket.getOutputStream());
+            ---Processed the request---
+            outputStream.writeObject(response);
+       }
+      ```
+      
+      ![image](https://media.geeksforgeeks.org/wp-content/uploads/20201031110311/Multiserver.png)
+      
+  + Unlike clients where there might be more than one client, a server is a server, in other words there is only one server to serve all clients,
+    this implies that using a design pattern like singelton a sensible decision to make.
