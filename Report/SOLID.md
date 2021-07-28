@@ -110,4 +110,5 @@ I did what I could, may Allah help me   :')
    
       ![image](https://user-images.githubusercontent.com/50204418/127282390-55a04c30-09f1-4ac9-a73a-d7e8af88587f.png)
 
-
+   + How did I implement it? I assured the DIP by keeping one level of inheritance, applying abstraction & reducing dependence between classes 
+         as much as possible.
