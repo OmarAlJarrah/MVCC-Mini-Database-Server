@@ -44,3 +44,25 @@ I did what I could, may Allah help me   :')
   + But is it really possible to stick ```100%``` to the OCP principle? Few would suggest that 100 percent of every design should satisfy the
       open/closed principle. But an effective design may use many components which do satisfy the principle but also include ```program glue```.
       The ```glue``` is used to bind the components into a working program, without much regard to the open/closedness of the ```glue``` part.
+
+
+### 3) Liskov Substitution Principle (LSP)
+   + What is LSP? Substitutability is a principle in object-oriented programming stating that, in a computer program, if S is a subtype of T, then
+       objects of type T may be replaced with objects of type S (i.e., an object of type T may be substituted with any object of a subtype S) without
+       altering any of the desirable properties of the program (correctness, task performed, etc.). More formally, the LSP is a particular definition 
+       of a subtyping relation, called (strong) behavioral subtyping. It is a semantic rather than merely syntactic relation, because it intends to
+       guarantee semantic interoperability of types in a hierarchy, object types in particular. To ensure a design supports the LSP:
+       
+       - Derived objects must not expect users to obey pre-conditions stronger than expected for the base class.
+       - Derived objects must satisfy all of the post-conditions satisfied by the base class.
+       
+      LSP can also be described as a counter-example of Duck Test: “If it looks like a duck, quacks like a duck, but needs batteries – you probably
+       have the wrong abstraction”
+   ![image](https://maksimivanov.com/static/74dad4b97aa9732e5644eb34f5eb18b7/a987b/liskov_1.png)
+   + Why LSP is important? The Liskov Substitution Principle is the third of Robert C. Martin’s SOLID design principles. It extends the Open/Closed
+        principle and enables you to replace objects of a parent class with objects of a subclass without breaking the application. This requires all
+        subclasses to behave in the same way as the parent class.
+        
+   + How did I implement it? As in OCP, interfaces assures the substitution of child classes, all classes that are childs of a higher abstract class
+        (interface), the compiler itself won't let you forget the rules defined by the parent class, which implies that childs of the same interface
+        are always substitutabile.
