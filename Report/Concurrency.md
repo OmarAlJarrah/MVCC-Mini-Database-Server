@@ -1,5 +1,14 @@
 # Concurrency
 
+### What is concurrency?
+  + concurrency is the ability of different parts or units of a program, algorithm, or problem to be executed out-of-order or at the same time
+      simultaneously partial order, without affecting the final outcome. This allows for parallel execution of the concurrent units, which can
+      significantly improve overall speed of the execution in multi-processor and multi-core systems. In more technical terms, concurrency 
+      refers to the decomposability of a program, algorithm, or problem into order-independent or partially-ordered components or units 
+      of computation.
+    
+  ![image](https://uploads.toptal.io/blog/image/126087/toptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png)
+
 ### Why concurrency is required?
   +  Multithreaded applications can take full advantage of multiple processors to gain better performance through simultaneous execution of tasks.
        A well-implemented multithreaded application efficiently uses all the processors available for its own tasks where a single-threaded application 
