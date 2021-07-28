@@ -40,3 +40,6 @@
 ### 3) Reading/Writing & Memory
   + All data that are to be written/read by the client do not use buffering, which insures the management of RAM usage, on the other hand, 
       a cache is created for each client to increase performance of read operations.
+      
+  + In order to clean the code, getting rid of the ```try - catch``` blocks & repeated code, I have made a tool to handle writing/reading 
+      files, providing the needed features for this specific task, and by creating interfaces as high abstraction, this serves good with the ```SOLID principles```.
