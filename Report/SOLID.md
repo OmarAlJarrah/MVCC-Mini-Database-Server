@@ -109,6 +109,29 @@ I did what I could, may Allah help me   :')
       also on the low-level one: the low-level one should be designed with the interaction in mind and it may be necessary to change its usage interface.
    
       ![image](https://user-images.githubusercontent.com/50204418/127282390-55a04c30-09f1-4ac9-a73a-d7e8af88587f.png)
+      
+   + Why DIP is important? well...
+        - Dependency injection allows a client the flexibility of being configurable. Only the client's behavior is fixed. The client may act on 
+             anything that supports the intrinsic interface the client expects.
+  
+        - Dependency injection can be used to externalize a system's configuration details into configuration files, allowing the system to be
+             reconfigured without recompilation. Separate configurations can be written for different situations that require different implementations
+             of components. This includes, but is not limited to, testing.
+             
+        - Because dependency injection does not require any change in code behavior it can be applied to legacy code as a refactoring. The result is
+             clients that are more independent and that are easier to unit test in isolation using stubs or mock objects that simulate other objects not
+             under test. This ease of testing is often the first benefit noticed when using dependency injection.
+             
+        - Dependency injection allows a client to remove all knowledge of a concrete implementation that it needs to use. This helps isolate the client 
+            from the impact of design changes and defects. It promotes reusability, testability and maintainability.
+            
+        - Reduction of boilerplate code in the application objects, since all work to initialize or set up dependencies is handled by a provider component.
+
+        - Dependency injection allows concurrent or independent development. Two developers can independently develop classes that use each other, while
+             only needing to know the interface the classes will communicate through. Plugins are often developed by third party shops that never even talk
+             to the developers who created the product that uses the plugins.
+
+        - Dependency Injection decreases coupling between a class and its dependency.
 
    + How did I implement it? I assured the DIP by keeping one level of inheritance, applying abstraction & reducing dependence between classes 
          as much as possible.
