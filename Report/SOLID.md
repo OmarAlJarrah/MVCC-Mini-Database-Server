@@ -3,7 +3,7 @@ I did what I could, may Allah help me   :')
 
 ### 1) Single Responsibility Principle (SRP)
    
-   ![image](https://user-images.githubusercontent.com/50204418/127268323-7f6e7cf6-baf9-4d25-9208-60ab4fc5a10d.png)
+   ![image](https://user-images.githubusercontent.com/50204418/127268323-7f6e7cf6-baf9-4d25-9208-60ab4fc5a10d.png) 
 
   + What is SRP? The Single Responsibility Principle is a computer programming principle that states that every module or class should have
       responsibility over a single part of the functionality that is provided by the software. That responsibility should be fully encapsulated 
@@ -11,7 +11,7 @@ I did what I could, may Allah help me   :')
       
   + Why is it important? The reason it is important to keep a class focused on a single concern is that it makes the class more robust. If the code
       needed to be changed constantly, there is a chance of the code becoming unstable and eventually leading to a break further down the development line.
-      
+            
   + So... what did I do about it? well... I focused on giving each module a one & only one goal that it works to achieve, a ```Log``` class for logs, 
       ```Writing/Reading``` tools as separated modules, splitting ```CRUD``` operations into a module per operation & a lot other than that are an 
       example for of SRP in the code base.
@@ -66,3 +66,36 @@ I did what I could, may Allah help me   :')
    + How did I implement it? As in OCP, interfaces assures the substitution of child classes, all classes that are childs of a higher abstract class
         (interface), the compiler itself won't let you forget the rules defined by the parent class, which implies that childs of the same interface
         are always substitutabile.
+        
+     
+### 4) Interface Segregation Principle (ISP)
+   ![image](https://www.coengoedegebure.com/content/images/2018/09/InterfaceSegregationPrinciple.jpeg)
+   + What is ISP? (ISP) states that no client should be forced to depend on methods it does not use.[1] ISP splits interfaces that are very large
+        into smaller and more specific ones so that clients will only have to know about the methods that are of interest to them. Such shrunken
+        interfaces are also called role interfaces.[2] ISP is intended to keep a system decoupled and thus easier to refactor, change, and redeploy.
+
+   + means that sometimes we tend to make interfaces with a lot of methods, which can be good to an extent, however this can easily abused, and we can
+        end up with classes that implement empty or useless methods which of course adds extra code and burden to our apps. Imagine you are declaring a
+        lot of methods in single interface, if you like visual aids a class that is implementing an interface but that is really needing a couple of
+        methods of it would look like this:
+
+   ![image](https://i.stack.imgur.com/V6p8i.png)
+
+   In the other hand, if you properly apply the interface segregation and split your interface in smaller subsets you can me sure to implement those
+      that are only needed:
+
+   ![image](https://i.stack.imgur.com/M0eWu.png)
+
+   See! Is way better! Enforcing this principle will allow you to have low coupling which aids to a better maintainability and high resistance to changes.
+   So you can really leverage the usage of interfaces and implementing the methods when you really should.
+   
+   + How did I implement the ISP? Simply implemented the SRP on interfaces, an example of that is the reading & writing tools, as each tool of those 
+         two were splitted into different modules, their interface were splitted too, if you want to read only, why compile the write module?
+         another example is the requests, as there are ```DatabaseRequest, ConnectionRequest & LoginRequest```, instead of making them a child to
+         one huge parent (interface) and violating the ISP, each of them has its own interface.
+         
+         
+### 5)  Dependency Inversion Principle (DIP)
+
+   ![image](https://miro.medium.com/max/1400/1*rQcIU3LFGGXtGD95FfN5uw.png)
+   
