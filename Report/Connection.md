@@ -1,5 +1,47 @@
 # Connection
 
+### Connection
+  + Connection describes a process in which two or more computers or devices transfer data, instructions, and information. Some communications
+      involve cables and wires; others are sent wirelessly through the air.
+      
+  + In our project, we have applied a ```Client - Server``` model, that is a distributed application structure that partitions tasks or workloads
+      between the providers of a resource or service, called servers, and service requesters, called clients.
+      
+  + Often clients and servers communicate over a computer network on separate hardware, but both client and server may reside in the same system.
+      A server host runs one or more server programs, which share their resources with clients. A client usually does not share any of its resources,
+      but it requests content or service from a server. Clients, therefore, initiate communication sessions with servers, which await incoming requests.
+      
+  + The "client-server" characteristic describes the relationship of cooperating programs in an application. The server component provides a function
+      or service to one or many clients, which initiate requests for such services. Servers are classified by the services they provide. For example,
+      a web server serves web pages and a file server serves computer files. A shared resource may be any of the server computer's software and 
+      electronic components, from programs and data to processors and storage devices. The sharing of resources of a server constitutes a service.
+      
+  ![image](https://user.oc-static.com/upload/2020/04/28/15880577088892_15874712483517_export.png)
+      
+  + Clients and servers exchange messages in a request–response messaging pattern. The client sends a request, and the server returns a response.
+      This exchange of messages is an example of inter-process communication. To communicate, the computers must have a common language, and they
+      must follow rules so that both the client and the server know what to expect. The language and rules of communication are defined in
+      a communications protocol. All protocols operate in the application layer. The application layer protocol defines the basic patterns of the
+      dialogue. To formalize the data exchange even further, the server may implement an application programming interface (API).
+    
+    ![image](https://bytenbit.com/wp-content/uploads/2019/09/Resful-API-cycle-768x206.png)
+    
+    
+    
+### What did we use?
+  + We use Sockets to create a ```Client - Server``` enviroment, where both client & server use their sockets to communicate with each other, 
+      a server has a port in which it listens to clients requests on it, a client sends a request to that port, then they are connected, this
+      mechanizm is provided by both the ```ServerSocket``` for the server side, ```Socket``` for the client side, in which both tools are provided
+      by the ```java.net``` API.
+      
+  + A ```ServerSocket``` job is to listen to requests, while in order to send & recieve data with other sockets, it creates a ```Socket```
+      object automatically once a request is accepted, that is configures to communicate with the socket requesting connection. The actual work 
+      of the server socket is performed by an instance of the SocketImpl class. An application can change the socket factory that creates the
+      socket implementation to configure itself to create sockets appropriate to the local firewall.
+  
+    ![image](https://codethat.files.wordpress.com/2010/01/scheme.png)
+
+
 ### Client Side
 
 + In order for the client to establish connection with the server, they will send a connection request of type ```ConnectionRequest``` that should be
