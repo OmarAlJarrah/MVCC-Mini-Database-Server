@@ -53,7 +53,7 @@
     each request opens a new socket at the client side while the old socket (if any exist) is closed.
   
   ```
-  function refreshConnection() {
+  function refreshSocket() {
     clientConnection.getSocket().close();
     clientConnection = new ClientConnection(this);
   }
