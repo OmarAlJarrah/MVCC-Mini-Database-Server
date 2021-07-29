@@ -47,7 +47,7 @@ public class DatabaseServer {
     ObjectReader reader = new ObjectReader();
     File clientsData = FilesManager.CLIENTS_DATA_FILE;
     List<Object> list = reader.readAll(clientsData);
-    for (Object obj: list){
+    for (Object obj: list) {
       ClientData clientData = (ClientData) obj;
       if (clientData.getUser().equals(username)){
         return clientData.getDatabase();
